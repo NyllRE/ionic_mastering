@@ -1,3 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@400&display=swap');
 ion-toolbar {
    --background: var(--ion-color-primary);
+}
+* {
+   font-family: 'Ubuntu', sans-serif;
 }

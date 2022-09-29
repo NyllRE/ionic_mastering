@@ -1,13 +1,13 @@
 <template lang="pug">
 BaseLayout( title="The Memories" )
-   MemoriesList
+   MemoriesList( :memories="memories" )
 
 </template>
 
 <script setup>
 import { computed } from 'vue';
 import { store } from '@/store'
-import MemoriesList from '#/memories/MemoriesList.vue';
+import MemoriesList from '@/components/memories/MemoriesList.vue';
 
 const memories = computed(() => {
    console.log(store.getters.memories)

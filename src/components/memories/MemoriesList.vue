@@ -13,4 +13,5 @@ import { defineProps } from 'vue'
 import MemoryListItem from './MemoryListItem.vue';
 
 const props = defineProps(["memories"])
+console.log(props.memories);
 </script>
