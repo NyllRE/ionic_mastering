@@ -7,8 +7,8 @@
 
 <template lang="pug">
 
-BaseLayout( :title="memory ? memory.title : 'loading...'" page-default-back-link="/memories" )
-   .content( v-if="memory") 
+BaseLayout( :title="memory ? memory.title : 'No Memory :/'" page-default-back-link="/memories" )
+   .content( v-if="memory" ) 
       IonImg( :src="memory.image" )
       h1.ion-text-center.b {{ memory.title }}
       p.ion-text-center {{ memory.description }}
@@ -24,12 +24,10 @@ import { store } from '@/store'
 
 const id = ref(window.location.pathname.split('/')[2])
 
-console.log(id.value);
-
 const memory = computed(() => {
    return store.getters.memory(id.value)
 })
 
-console.log(memory);
+console.log(store.getters.memory(id.value));
 
 </script>

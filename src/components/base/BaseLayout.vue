@@ -5,6 +5,8 @@ IonPage
          IonTitle {{ title }}
          IonButtons( slot="start" )
             IonBackButton
+         IonButtons( slot="end" )
+            slot( name="actions" )
    IonContent 
       slot
 </template>

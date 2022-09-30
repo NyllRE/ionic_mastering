@@ -1,3 +1,4 @@
+import { image } from "ionicons/icons";
 import { createStore } from "vuex";
 
 export const store = createStore({
@@ -39,6 +40,24 @@ export const store = createStore({
 			return (id) => { //=>> filter memory with id
 				return state.memories.find((memory) => memory.id === id)
 			}
+		}
+	},
+	mutations: {
+		addMemory(state, memory) {
+			const newMemory = {
+				id: String(Math.floor(Math.random() * (10 ** 5))),
+				title: memory.title,
+				image: memory.image,
+				description: memory.description || 'br',
+			}
+
+			state.memories.unshift(newMemory)
+		}
+	},
+	actions: {
+		addMemory(context, memoryData) {
+			//=>> you could use this place to push data to backend
+			context.commit('addMemory', memoryData)
 		}
 	}
 });

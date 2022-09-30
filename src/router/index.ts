@@ -13,9 +13,13 @@ const routes: Array<RouteRecordRaw> = [
     component: MemoriesPage,
   },
   {
+    path: '/memories/add',
+    component: () => import('@/pages/AddMemoryPage.vue')
+  },
+  {
     path: '/memories/:id',
-    component: () => import('../pages/MemoriesDetail.vue')
-  }
+    component: () => import('@/pages/MemoriesDetail.vue')
+  },
 ]
 
 const router = createRouter({
