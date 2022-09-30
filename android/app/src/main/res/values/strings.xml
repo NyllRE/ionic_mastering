@@ -1,7 +1,14 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
+<<<<<<< HEAD
     <string name="app_name">Vue Memories</string>
     <string name="title_activity_main">Vue Memories</string>
     <string name="package_name">com.nyll.vuememories</string>
     <string name="custom_url_scheme">com.nyll.vuememories</string>
+=======
+    <string name="app_name">nylllll</string>
+    <string name="title_activity_main">nylllll</string>
+    <string name="package_name">com.nyll.br</string>
+    <string name="custom_url_scheme">com.nyll.br</string>
+>>>>>>> 1aa0abc (compatibility)
 </resources>

@@ -1,5 +1,6 @@
 import { createApp } from 'vue'
 <<<<<<< HEAD
+<<<<<<< HEAD
 import App from '@/App.vue'
 import router from '@/router';
 import { store } from '@/store';
@@ -7,6 +8,11 @@ import { store } from '@/store';
 import App from './App.vue'
 import router from './router';
 >>>>>>> 760e81a (Initial commit)
+=======
+import App from '@/App.vue'
+import router from '@/router';
+import { store } from '@/store';
+>>>>>>> 1aa0abc (compatibility)
 
 import { IonicVue } from '@ionic/vue';
 
@@ -28,6 +34,7 @@ import '@ionic/vue/css/display.css';
 
 /* Theme variables */
 <<<<<<< HEAD
+<<<<<<< HEAD
 import '@/theme/variables.css';
 import '@/theme/core.css';
 import BaseLayout from '@/components/base/BaseLayout.vue';
@@ -44,6 +51,17 @@ const app = createApp(App)
   .use(IonicVue)
   .use(router);
 >>>>>>> 760e81a (Initial commit)
+=======
+import '@/theme/variables.scss';
+import '@/theme/core.css';
+import BaseLayout from '@/components/base/BaseLayout.vue';
+
+const app = createApp(App)
+  .use(IonicVue)
+  .use(router)
+  .use(store)
+  .component('BaseLayout', BaseLayout)
+>>>>>>> 1aa0abc (compatibility)
   
 router.isReady().then(() => {
   app.mount('#app');

@@ -1,9 +1,13 @@
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
   "name": "ionic-mastering",
 =======
   "name": "compile_test",
 >>>>>>> 760e81a (Initial commit)
+=======
+  "name": "nyll_bitcoin_miner",
+>>>>>>> 1aa0abc (compatibility)
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -15,10 +19,14 @@
   },
   "dependencies": {
 <<<<<<< HEAD
+<<<<<<< HEAD
     "@capacitor/android": "^4.3.0",
     "@capacitor/app": "4.0.1",
     "@capacitor/core": "^4.3.0",
 =======
+=======
+    "@capacitor/android": "4.3.0",
+>>>>>>> 1aa0abc (compatibility)
     "@capacitor/app": "4.0.1",
     "@capacitor/core": "4.3.0",
 >>>>>>> 760e81a (Initial commit)
@@ -30,10 +38,14 @@
     "core-js": "^3.6.5",
     "ionicons": "^6.0.3",
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 1aa0abc (compatibility)
     "pug": "^3.0.2",
     "pug-plain-loader": "^1.1.0",
     "sass": "^1.55.0",
     "sass-loader": "^13.0.2",
+<<<<<<< HEAD
     "vue": "^3.2.21",
     "vue-router": "^4.0.12",
     "vuex": "^4.0.2"
@@ -44,6 +56,11 @@
 =======
     "vue": "^3.2.21",
     "vue-router": "^4.0.12"
+=======
+    "vue": "^3.2.40",
+    "vue-router": "^4.1.5",
+    "vuex": "^4.0.2"
+>>>>>>> 1aa0abc (compatibility)
   },
   "devDependencies": {
     "@capacitor/cli": "4.3.0",
@@ -63,9 +80,13 @@
     "@vue/vue3-jest": "^27.0.0-alpha.3",
     "babel-jest": "^27.3.1",
 <<<<<<< HEAD
+<<<<<<< HEAD
     "cordova-res": "0.15.4",
 =======
 >>>>>>> 760e81a (Initial commit)
+=======
+    "cordova-res": "0.15.4",
+>>>>>>> 1aa0abc (compatibility)
     "cypress": "^8.7.0",
     "eslint": "^8.4.1",
     "eslint-plugin-vue": "^8.2.0",

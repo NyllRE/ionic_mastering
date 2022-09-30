@@ -10,9 +10,13 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
 <<<<<<< HEAD
+<<<<<<< HEAD
     "allowJs": true,
 =======
 >>>>>>> 760e81a (Initial commit)
+=======
+    "allowJs": true,
+>>>>>>> 1aa0abc (compatibility)
     "sourceMap": true,
     "baseUrl": ".",
     "types": [
@@ -40,6 +44,7 @@
   },
   "include": [
     "src/**/*.ts",
+    "src/**/*.js",
     "src/**/*.tsx",
     "src/**/*.vue",
     "tests/**/*.ts",
