@@ -1,5 +1,9 @@
 {
+<<<<<<< HEAD
   "name": "ionic_mastering",
+=======
+  "name": "compile_test",
+>>>>>>> 760e81a (Initial commit)
   "integrations": {
     "capacitor": {}
   },

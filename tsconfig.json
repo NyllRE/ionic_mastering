@@ -9,7 +9,10 @@
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
+<<<<<<< HEAD
     "allowJs": true,
+=======
+>>>>>>> 760e81a (Initial commit)
     "sourceMap": true,
     "baseUrl": ".",
     "types": [
@@ -19,10 +22,14 @@
     "paths": {
       "@/*": [
         "src/*"
+<<<<<<< HEAD
       ],
       "#/*": [
         "src/components/*"
       ],
+=======
+      ]
+>>>>>>> 760e81a (Initial commit)
     },
     "lib": [
       "esnext",

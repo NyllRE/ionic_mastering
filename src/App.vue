@@ -1,7 +1,11 @@
 <template>
   <ion-app>
     <ion-router-outlet />
+<<<<<<< HEAD
   </ion-app>  
+=======
+  </ion-app>
+>>>>>>> 760e81a (Initial commit)
 </template>
 
 <script lang="ts">
