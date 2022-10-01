@@ -39,4 +39,7 @@
     <!-- Permissions -->
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERAL_STORAGE" />
 </manifest>
