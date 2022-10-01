@@ -32,17 +32,18 @@ BaseLayout( title="add a memory" page-default-back-link="/memories" )
 </template>
 
 <script setup>
-import { IonList, IonItem, IonLabel, IonInput, IonTextarea, IonButton, IonThumbnail, IonIcon, IonActionSheet } from '@ionic/vue';
-import { reactive, ref } from 'vue';
-import { useRouter } from "vue-router";
-import { store } from '@/store';
-import { camera, images } from 'ionicons/icons';
+import { IonList, IonItem, IonLabel, IonInput, IonTextarea, IonButton, IonThumbnail, IonIcon, IonActionSheet } from '@ionic/vue'
+import { reactive, ref } from 'vue'
+import { useRouter } from "vue-router"
+import { piniaStore } from '@/store'
+import { camera, images } from 'ionicons/icons'
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera'
 
 
-const router = useRouter();
+const router = useRouter()
+const store = piniaStore()
 
-const camIcon = ref(camera);
+const camIcon = ref(camera)
 
 const takePhoto = async () => {
    const photo = await Camera.getPhoto({
@@ -62,7 +63,7 @@ const form = reactive({
 })
 
 const saveMemory = () => {
-   store.dispatch('addMemory', {
+   store.addMemory({
       title: form.title,
       image: form.image,
       description: form.description,

@@ -20,14 +20,15 @@ BaseLayout( :title="memory ? memory.title : 'No Memory :/'" page-default-back-li
 <script setup>
 import { ref, computed } from 'vue';
 import { IonImg } from '@ionic/vue'
-import { store } from '@/store'
+import { piniaStore } from '@/store'
 
+const store = piniaStore()
 const id = ref(window.location.pathname.split('/')[2])
 
 const memory = computed(() => {
-   return store.getters.memory(id.value)
+   return store.memory(id.value)
 })
 
-console.log(store.getters.memory(id.value));
+console.log(store.memory(id.value));
 
 </script>

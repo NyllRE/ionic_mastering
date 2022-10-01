@@ -2,7 +2,7 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router';
 import { store } from './store';
-
+import { createPinia } from 'pinia'
 import { IonicVue } from '@ionic/vue';
 
 /* Core CSS required for Ionic components to work properly */
@@ -26,10 +26,13 @@ import '@/theme/variables.scss';
 import '@/theme/core.css';
 import BaseLayout from '@/components/base/BaseLayout.vue';
 
+const pinia = createPinia()
+
 const app = createApp(App)
   .use(IonicVue)
   .use(router)
   .use(store)
+  .use(pinia)
   .component('BaseLayout', BaseLayout)
 
 router.isReady().then(() => {
