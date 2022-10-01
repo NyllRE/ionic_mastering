@@ -19,9 +19,9 @@ BaseLayout( title="add a memory" page-default-back-link="/memories" )
 <script setup>
 import BaseLayout from '@/components/base/BaseLayout.vue';
 import { IonList, IonItem, IonLabel, IonInput, IonTextarea, IonButton } from '@ionic/vue';
-import { store } from '@/store'
 import { reactive } from 'vue';
 import { useRouter } from "vue-router";
+import { store } from '@/store'
 
 const router = useRouter();
 

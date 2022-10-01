@@ -29,8 +29,5 @@ npm-debug.log*
 /platforms
 /plugins
 /www
-<<<<<<< HEAD
 
 resources/android/**/*
-=======
->>>>>>> 760e81a (Initial commit)

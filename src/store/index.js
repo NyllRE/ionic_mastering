@@ -1,4 +1,3 @@
-import { image } from "ionicons/icons";
 import { createStore } from "vuex";
 
 export const store = createStore({

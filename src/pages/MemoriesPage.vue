@@ -11,10 +11,10 @@ BaseLayout( title="The Memories" )
 
 <script setup>
 import { computed, ref } from 'vue';
-import { store } from '@/store';
 import { IonButton, IonIcon } from '@ionic/vue';
 import { add } from 'ionicons/icons';
 import MemoriesList from '@/components/memories/MemoriesList.vue';
+import { store } from '@/store'
 
 const addIcon = ref(add);
 

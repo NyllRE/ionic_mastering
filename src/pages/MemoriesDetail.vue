@@ -17,7 +17,7 @@ BaseLayout( :title="memory ? memory.title : 'No Memory :/'" page-default-back-li
 
 </template>
 
-<script setup >
+<script setup>
 import { ref, computed } from 'vue';
 import { IonImg } from '@ionic/vue'
 import { store } from '@/store'
