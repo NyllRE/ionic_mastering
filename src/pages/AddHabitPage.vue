@@ -18,12 +18,9 @@ BaseLayout( title="add a memory" page-default-back-link="/memories" )
             IonLabel( position="floating" ) Title
             IonInput( required v-model="form.title" )
          IonItem
-            IonThumbnail( slot="start" )
-               img( :src="form.image" v-if="form.image != ''" )
-               IonIcon.image-placeholder( v-else :src="images" )
-            IonButton( fill="clear" @click="takePhoto" type="button" )
-               IonIcon( :icon="camIcon" slot="start" )
-               |Take Photo
+            IonButton( fill="clear" type="button" router-link="/habits/add/icon-picker" )
+               IonIcon( :icon="happy" slot="start" )
+               | Choose Emoji
          IonItem
             IonLabel( position="floating" ) Description 
             IonTextarea( rows="5" v-model="form.description" )
@@ -36,16 +33,15 @@ import { IonList, IonItem, IonLabel, IonInput, IonTextarea, IonButton, IonThumbn
 import { reactive, ref } from 'vue'
 import { useRouter } from "vue-router"
 import { piniaStore } from '@/store'
-import { camera, images } from 'ionicons/icons'
+import { camera, happy } from 'ionicons/icons'
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera'
 
 
 const router = useRouter()
 const store = piniaStore()
 
-const camIcon = ref(camera)
 
-const takePhoto = async () => {
+const chooseEmoji = async () => {
    const photo = await Camera.getPhoto({
     quality: 90,
     allowEditing: true,
