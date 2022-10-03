@@ -6,6 +6,7 @@ const habits = [
 		title: 'Github Commit',
 		dailyComment: [],
 		color: '#4f5',
+		icon: 'codeSlash',
 	},
 ]
 
@@ -21,6 +22,7 @@ export const piniaStore = defineStore('main', {
 				title: habit.title,
 				dailyComment: habit.dailyComment,
 				color: habit.color,
+				icon: habit.icon,
 			}
 
 			this.habits.unshift(newMemory);

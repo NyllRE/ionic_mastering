@@ -35,9 +35,3 @@ IonContent( role="feed" )
 import * as icons from 'ionicons/icons'
 import { IonIcon, IonContent, IonGrid, IonRow, IonCol, IonHeader, IonToolbar, IonTitle, IonButtons, IonBackButton } from '@ionic/vue';
 </script>
-
-<script>
-export default {
-
-}
-</script>

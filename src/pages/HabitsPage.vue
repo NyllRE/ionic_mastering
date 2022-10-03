@@ -5,7 +5,7 @@ BaseLayout( title="The Memories" )
       IonButton( router-link="/habits/add" )
          IonIcon( slot="icon-only" :icon='addIcon' )
 
-   HabitsList( :memories="store.habits" )
+   HabitsList( :habits="store.habits" )
 
 </template>
 
@@ -13,7 +13,7 @@ BaseLayout( title="The Memories" )
 import { computed, ref } from 'vue';
 import { IonButton, IonIcon } from '@ionic/vue';
 import { add } from 'ionicons/icons';
-import HabitsList from '@/components/memories/HabitsList.vue';
+import HabitsList from '@/components/habits/HabitsList.vue';
 import { piniaStore } from '@/store'
 
 const store = piniaStore()

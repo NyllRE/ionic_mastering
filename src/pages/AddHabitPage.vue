@@ -18,7 +18,7 @@ BaseLayout( title="add a memory" page-default-back-link="/memories" )
             IonLabel( position="floating" ) Title
             IonInput( required v-model="form.title" )
          IonItem
-            IonButton( fill="clear" type="button" router-link="/habits/add/icon-picker" )
+            IonButton( fill="clear" type="button" @click="modal = !modal" )
                IonIcon( :icon="happy" slot="start" )
                | Choose Emoji
          IonItem
@@ -26,21 +26,27 @@ BaseLayout( title="add a memory" page-default-back-link="/memories" )
             IonTextarea( rows="5" v-model="form.description" )
          IonButton( expand="block" fill="outline" type="submit" ) submit
 
+
+   IonModal( :is-open="modal" )
+      IconChooser
+
 </template>
 
 <script setup>
-import { IonList, IonItem, IonLabel, IonInput, IonTextarea, IonButton, IonThumbnail, IonIcon, IonActionSheet } from '@ionic/vue'
+import { IonList, IonItem, IonLabel, IonInput, IonTextarea, IonButton, IonThumbnail, IonIcon, IonActionSheet, IonModal } from '@ionic/vue'
 import { reactive, ref } from 'vue'
 import { useRouter } from "vue-router"
 import { piniaStore } from '@/store'
 import { camera, happy } from 'ionicons/icons'
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera'
+import * as icons from 'ionicons/icons'
+import IconChooser from '../components/habits/IconChooser.vue'
 
 
 const router = useRouter()
 const store = piniaStore()
 
-
+const modal = ref(false)
 const chooseEmoji = async () => {
    const photo = await Camera.getPhoto({
     quality: 90,

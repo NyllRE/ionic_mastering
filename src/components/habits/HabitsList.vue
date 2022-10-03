@@ -1,9 +1,9 @@
 <template lang="pug">
 IonList
    HabitListItem(
-      v-for="memory in memories"
-      :key="memory.id"
-      :memory="memory"
+      v-for="habit in habits"
+      :key="habit.id"
+      :habit="habit"
    )
 </template>
 
@@ -12,5 +12,5 @@ import { IonList, IonIcon } from '@ionic/vue'
 import { defineProps } from 'vue'
 import HabitListItem from './HabitListItem.vue';
 
-const props = defineProps(["memories"])
+const props = defineProps(["habits"])
 </script>

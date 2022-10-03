@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from '@ionic/vue-router';
 import habitsPage from '../pages/HabitsPage.vue';
+import AddHabitPage from '@/pages/AddHabitPage.vue';
 
 
 const routes = [
@@ -14,12 +15,12 @@ const routes = [
   },
   {
     path: '/habits/add',
-    component: () => import('@/pages/AddHabitPage.vue')
+    component: AddHabitPage,
   },
-  {
-    path: '/habits/add/icon-picker',
-    component: () => import('@/pages/IconChooser.vue')
-  },
+  // {
+  //   path: '/habits/add/icon-picker',
+  //   component: () => import('@/pages/IconChooser.vue'),
+  // },
   {
     path: '/habits/:id',
     component: () => import('../pages/HabitDetail.vue')
