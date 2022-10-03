@@ -13,7 +13,7 @@ ion-thumbnail {
 
 IonItem( :router-link="`/habits/${habit.id}`" )
    IonThumbnail( slot="start" )
-      IonIcon.icon( :icon="icons[habit.icon]" )
+      IonIcon.icon( :icon="habit.icon" )
    IonLabel
       h1 {{ habit.title }}
       h3 {{ habit.description }}
@@ -23,8 +23,9 @@ IonItem( :router-link="`/habits/${habit.id}`" )
 
 <script setup>
 import { defineProps } from 'vue';
-import * as icons from 'ionicons/icons';
 import { IonItem, IonThumbnail, IonImg, IonLabel, IonIcon } from '@ionic/vue';
 const props = defineProps(["habit"])
+
+console.log(props.habit);
 
 </script>

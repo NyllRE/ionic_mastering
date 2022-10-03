@@ -26,7 +26,7 @@ IonContent( role="feed" )
                size="4"
                key="idx"
             )
-               IonIcon.icon( :icon="icon" )
+               IonIcon.icon( :icon="icon" @click="choose(idx)" )
                p {{ idx.charAt(0).toUpperCase() + idx.slice(1).match(/[A-Za-z][a-z]*/g).join(" ") }}
 </template>
 
@@ -34,4 +34,12 @@ IonContent( role="feed" )
 <script setup>
 import * as icons from 'ionicons/icons'
 import { IonIcon, IonContent, IonGrid, IonRow, IonCol, IonHeader, IonToolbar, IonTitle, IonButtons, IonBackButton } from '@ionic/vue';
+import { defineEmits } from 'vue';
+
+const emits = defineEmits(['chosen'])
+
+const choose = (idx) => {
+   emits('chosen', icons[idx])
+}
+
 </script>

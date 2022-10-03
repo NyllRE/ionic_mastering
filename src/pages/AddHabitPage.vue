@@ -1,77 +1,79 @@
 <style lang="scss">
 .image-placeholder {
    font-size: 3em;
-   display: grid;
-   place-self: center;
-   // justify-content: center;
    height: 100%;
    width: 100%;
+}
+.input-wrapper {
+   display: grid;
+   place-self: center;
+}
+
+.color-input {
+   background: none;
+   border-radius: 5px;
+   width: 30%;
 }
 </style>
 
 <template lang="pug">
 
 BaseLayout( title="add a memory" page-default-back-link="/memories" )
-   form.ion-padding( @submit.prevent="saveMemory" )
+   form.ion-padding( @submit.prevent="saveHabit" )
       IonList
          IonItem 
             IonLabel( position="floating" ) Title
             IonInput( required v-model="form.title" )
-         IonItem
-            IonButton( fill="clear" type="button" @click="modal = !modal" )
+
+         IonItem.center
+            IonIcon.icon( :icon="form.icon" v-if="form.icon != ''" )
+            IonButton( fill="clear" type="button" @click="modal = !modal" v-else )
                IonIcon( :icon="happy" slot="start" )
-               | Choose Emoji
+               | Choose Icon
+         
          IonItem
-            IonLabel( position="floating" ) Description 
-            IonTextarea( rows="5" v-model="form.description" )
+            IonLabel Color
+            input.color-input( type="color" v-model="form.color" )
+
+
          IonButton( expand="block" fill="outline" type="submit" ) submit
 
-
    IonModal( :is-open="modal" )
-      IconChooser
+      IconChooser( @chosen="chosenIcon" )
+   
 
 </template>
 
 <script setup>
-import { IonList, IonItem, IonLabel, IonInput, IonTextarea, IonButton, IonThumbnail, IonIcon, IonActionSheet, IonModal } from '@ionic/vue'
+import { IonList, IonItem, IonLabel, IonInput, IonButton, IonIcon, IonModal } from '@ionic/vue'
 import { reactive, ref } from 'vue'
 import { useRouter } from "vue-router"
 import { piniaStore } from '@/store'
-import { camera, happy } from 'ionicons/icons'
-import { Camera, CameraResultType, CameraSource } from '@capacitor/camera'
-import * as icons from 'ionicons/icons'
+import { happy } from 'ionicons/icons'
 import IconChooser from '../components/habits/IconChooser.vue'
 
 
 const router = useRouter()
 const store = piniaStore()
-
 const modal = ref(false)
-const chooseEmoji = async () => {
-   const photo = await Camera.getPhoto({
-    quality: 90,
-    allowEditing: true,
-   resultType: CameraResultType.Uri,
-   source: CameraSource.Camera 
-   })
-
-   form.image = photo.webPath;
-}
 
 const form = reactive({
    title: '',
-   image: '',
-   description: '',
+   icon: '',
+   color: ''
 })
 
-const saveMemory = () => {
-   store.addMemory({
-      title: form.title,
-      image: form.image,
-      description: form.description,
-   });
+const chosenIcon = async (icon) => {
+   form.icon = icon
+   modal.value = false
+}
 
-   router.replace('/memories')
+
+const saveHabit = () => {
+   console.log(form.color);
+   store.addHabit(form);
+
+   router.replace('/habits')
 }
 
 </script>

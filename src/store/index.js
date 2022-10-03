@@ -20,7 +20,6 @@ export const piniaStore = defineStore('main', {
 			const newMemory = {
 				id: String(Math.floor(Math.random() * (10 ** 10))),
 				title: habit.title,
-				dailyComment: habit.dailyComment,
 				color: habit.color,
 				icon: habit.icon,
 			}
