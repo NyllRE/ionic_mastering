@@ -3,7 +3,9 @@ import { useLocalStorage } from '@vueuse/core'
 import { codeSlash } from 'ionicons/icons';
 
 
-// console.log(dayjs("2022-10-03T19:06:38.147Z").from());
+const randomId = () => {
+	return String(Math.floor(Math.random() * (10 ** 10)))
+}
 
 export const piniaStore = defineStore('main', {
 	state: () => ({
@@ -16,10 +18,12 @@ export const piniaStore = defineStore('main', {
 					{
 						text: 'You can Add Comments here Each day',
 						date: new Date(),
+						id: randomId()
 					},
 					{
 						text: 'just like a diary, this way you can track your moods :)',
 						date: new Date(),
+						id: randomId(),
 					}
 				],
 				color: '#339',
@@ -45,14 +49,20 @@ export const piniaStore = defineStore('main', {
 			});
 		},
 		removeHabit(habitId) {
-			const item = this.habits.find(() => this.habits.id === habitId)
 
-			this.habits.splice(item, 1);
+			this.habits.splice(this.habit(habitId), 1);
 		},
-		addComment(comment, habitId) {
-			this.habits
-				.find(this.habits.id === habitId)
-				.dailyComment.unshift(comment)
+		addComment(habitId, comment) {
+			const habit = this.habit(habitId)
+			console.log(habitId, habit);
+			habit.dailyComment.unshift({
+				text: comment,
+				id: randomId(),
+				date: new Date(),
+			})
+		},
+		removeComment(habitId, commentId) {
+			const habit = this.habit(habitId)
 		}
 	}
 })

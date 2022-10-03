@@ -2,11 +2,16 @@
 
 .icon {
    font-size: 5em;
-   margin-bottom: 1em;
+   margin: .5em 0;
 }
 
 .label {
-   color: grey
+   color: grey;
+}
+
+.normal {
+   font-size: 16px;
+   margin: 0
 }
 </style>
 
@@ -19,12 +24,14 @@ BaseLayout(
 )
    .ion-text-center( v-if="habit" )
 
-      IonIcon.icon( :icon="habit.icon" )
+      .icon
+         IonIcon( :icon="habit.icon" )
+         p.normal {{ dayjs(habit.date).from() }}
 
-      form( @submit.prevent="" )
+      form( @submit.prevent="postComment" )
          IonItem
             IonLabel.label( position="floating" ) add a comment
-            IonInput
+            IonInput( v-model="comment" )
 
       IonItem(
          v-for="comment in habit.dailyComment"
@@ -55,6 +62,11 @@ const habit = computed(() => {
    return store.habit(id.value)
 })
 
-// console.log(store.habit(id.value));
+const comment = ref('')
+const postComment = () => {
+   console.log(comment.value);
+   store.addComment(id.value, comment.value);
+   comment.value = ''
+}
 
 </script>
