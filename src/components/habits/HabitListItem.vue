@@ -3,7 +3,7 @@
    font-size: 3em;
 }
 .remover {
-   font-size: 1.4em;
+   font-size: 2em;
 }
 ion-thumbnail {
    display: flex;
@@ -20,9 +20,8 @@ IonItem
    
    IonLabel( :router-link="`/habits/${habit.id}`" )
       h1 {{ habit.title }}
-      h3 {{ habit.description }}
    
-   IonButton( slot="end" @click="deleter" )
+   IonButton( slot="end" @click="deleter(habit.id)" fill="clear" )
       IonIcon.remover( :icon="trashBinOutline" )
       
 
@@ -31,14 +30,15 @@ IonItem
 <script setup>
 import { defineProps } from 'vue';
 import { trashBinOutline } from 'ionicons/icons';
-import { IonItem, IonThumbnail, IonImg, IonLabel, IonIcon } from '@ionic/vue';
+import { IonItem, IonThumbnail, IonLabel, IonIcon, IonButton } from '@ionic/vue';
 import { piniaStore } from '@/store';
 
 const props = defineProps(["habit"])
 const store = piniaStore()
 
 const deleter = (id) => {
-   store.removeHabit(props.habit.id);
+   console.log(id);
+   store.removeHabit(id);
 }
 
 </script>

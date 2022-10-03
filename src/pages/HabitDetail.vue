@@ -34,6 +34,6 @@ const habit = computed(() => {
    return store.habit(id.value)
 })
 
-console.log(store.habit(id.value));
+// console.log(store.habit(id.value));
 
 </script>

@@ -8,6 +8,7 @@ export const piniaStore = defineStore('main', {
 		habits: useLocalStorage('vueUseMain', [
 			{
 				id: String(Math.floor(Math.random() * (10 ** 10))),
+				date: new Date(),
 				title: 'Github Commit',
 				dailyComment: ['fun', 'forgor'],
 				color: '#339',
@@ -23,18 +24,17 @@ export const piniaStore = defineStore('main', {
 	},
 	actions: {
 		addHabit(habit) {
-			const newMemory = {
+			this.habits.unshift({
 				id: String(Math.floor(Math.random() * (10 ** 10))),
+				date: new Date(),
 				title: habit.title,
 				color: habit.color,
 				icon: habit.icon,
-			}
-			this.habits.unshift(newMemory);
+			});
 		},
 		removeHabit(habitId) {
-			const item = this.habits.indexOf(
-				this.habits.find(this.habits.id === habitId)
-			)
+			const item = this.habits.find(() => this.habits.id === habitId)
+
 			this.habits.splice(item, 1);
 		},
 		addComment(comment, habitId) {
