@@ -1,6 +1,7 @@
 <style lang="scss">
-.b {
-   font-weight: bold;
+
+.icon {
+   font-size: 5em
 }
 
 </style>
@@ -8,11 +9,14 @@
 
 <template lang="pug">
 
-BaseLayout( :title="habit ? habit.title : 'No Memory :/'" page-default-back-link="/memories" )
-   .content.ion-text-center( v-if="habit" ) 
-      IonIcon( :icon="habit.icon" )
-      h1.ion-text-center.b {{ habit.title }}
-      p {{ habit.description }}
+BaseLayout(
+   :title="habit ? habit.title : 'No Memory :/'"
+   page-default-back-link="/memories"
+)
+   .ion-text-center( v-if="habit" ) 
+      IonIcon.icon( :icon="habit.icon" )
+      p {{ habit.dailyComment }}
+
    h1( v-else ) memory not found
 
 

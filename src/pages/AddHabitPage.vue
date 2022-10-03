@@ -14,6 +14,12 @@
    border-radius: 5px;
    width: 30%;
 }
+
+.whitespace {
+   font-size: 1.3em;
+   margin-left: .5em;
+}
+
 </style>
 
 <template lang="pug">
@@ -26,7 +32,9 @@ BaseLayout( title="add a memory" page-default-back-link="/memories" )
             IonInput( required v-model="form.title" )
 
          IonItem.center
-            IonIcon.icon( :icon="form.icon" v-if="form.icon != ''" )
+            template( v-if="form.icon != ''" )
+               IonIcon( :icon="form.icon" style="color: black" )
+               p.whitespace {{ iconName }}
             IonButton( fill="clear" type="button" @click="modal = !modal" v-else )
                IonIcon( :icon="happy" slot="start" )
                | Choose Icon
@@ -56,6 +64,7 @@ import IconChooser from '../components/habits/IconChooser.vue'
 const router = useRouter()
 const store = piniaStore()
 const modal = ref(false)
+const iconName = ref('')
 
 const form = reactive({
    title: '',
@@ -64,8 +73,10 @@ const form = reactive({
 })
 
 const chosenIcon = async (icon) => {
-   form.icon = icon
+   form.icon = icon[0]
    modal.value = false
+   iconName.value = icon[1]
+   console.log(icon[1]);
 }
 
 

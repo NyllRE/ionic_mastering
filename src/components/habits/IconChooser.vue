@@ -19,15 +19,15 @@ IonContent( role="feed" )
    IonGrid
       IonRow( role="article" )
          template(
-            v-for="(icon, idx) in icons"
+            v-for="(icon, name) in icons"
           )
             IonCol.ion-align-self-center(
-               v-if="!idx.includes('Outline') && !idx.includes('Sharp')" 
+               v-if="!name.includes('Outline') && !name.includes('Sharp')" 
                size="4"
                key="idx"
             )
-               IonIcon.icon( :icon="icon" @click="choose(idx)" )
-               p {{ idx.charAt(0).toUpperCase() + idx.slice(1).match(/[A-Za-z][a-z]*/g).join(" ") }}
+               IonIcon.icon( :icon="icon" @click="choose(name)" )
+               p {{ name.charAt(0).toUpperCase() + name.slice(1).match(/[A-Za-z][a-z]*/g).join(" ") }}
 </template>
 
 
@@ -38,8 +38,15 @@ import { defineEmits } from 'vue';
 
 const emits = defineEmits(['chosen'])
 
-const choose = (idx) => {
-   emits('chosen', icons[idx])
+const choose = (name) => {
+   console.log(name.charAt(0).toUpperCase() + name.slice(1).match(/[A-Za-z][a-z]*/g).join(" "));
+   emits(
+      'chosen',
+      [
+         icons[name],
+         name.charAt(0).toUpperCase() + name.slice(1).match(/[A-Za-z][a-z]*/g).join(" ")
+      ]
+   )
 }
 
 </script>
