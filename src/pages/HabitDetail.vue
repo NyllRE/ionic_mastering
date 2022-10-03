@@ -13,6 +13,10 @@
    font-size: 16px;
    margin: 0
 }
+
+.text {
+   white-space: initial;
+}
 </style>
 
 
@@ -34,12 +38,14 @@ BaseLayout(
             IonInput( v-model="comment" )
 
       IonItem(
-         v-for="comment in habit.dailyComment"
+         v-for="comment in habit.comments"
          :key="comment.text"
       )
-         IonLabel
+         IonLabel.text
             h3 {{ comment.text }}
             p {{ dayjs(comment.date).from() }}
+         IonButton( slot="end" @click="removeComment(comment.id)" fill="clear" )
+            IonIcon.remover( :icon="trashBinOutline" )
 
    h1( v-else ) memory not found
 
@@ -48,10 +54,11 @@ BaseLayout(
 
 <script setup>
 import { ref, computed } from 'vue';
-import { IonIcon, IonItem, IonLabel, IonInput } from '@ionic/vue'
+import { IonIcon, IonItem, IonLabel, IonInput, IonButton } from '@ionic/vue'
+import { trashBinOutline } from 'ionicons/icons';
 import { piniaStore } from '@/store'
 import dayjs from 'dayjs';
-import relativeTime from 'dayjs/plugin/relativeTime'
+import relativeTime from 'dayjs/plugin/relativeTime';
 
 dayjs.extend(relativeTime)
 
@@ -68,5 +75,7 @@ const postComment = () => {
    store.addComment(id.value, comment.value);
    comment.value = ''
 }
-
+const removeComment = (commentId) => {
+   store.removeComment(id.value, commentId);
+}
 </script>

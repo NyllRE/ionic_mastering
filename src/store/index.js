@@ -14,7 +14,7 @@ export const piniaStore = defineStore('main', {
 				id: String(Math.floor(Math.random() * (10 ** 10))),
 				date: new Date(),
 				title: 'Github Commit',
-				dailyComment: [
+				comments: [
 					{
 						text: 'You can Add Comments here Each day',
 						date: new Date(),
@@ -34,7 +34,7 @@ export const piniaStore = defineStore('main', {
 	getters: {
 		habit(state) {
 			return (id) =>
-				state.habits.find((memory) => memory.id === id)
+				state.habits.find((habit) => habit.id === id)
 		},
 	},
 	actions: {
@@ -43,26 +43,30 @@ export const piniaStore = defineStore('main', {
 				id: String(Math.floor(Math.random() * (10 ** 10))),
 				date: new Date(),
 				title: habit.title,
-				dailyComment: [],
+				comments: [],
 				color: habit.color,
 				icon: habit.icon,
 			});
 		},
 		removeHabit(habitId) {
-
 			this.habits.splice(this.habit(habitId), 1);
 		},
 		addComment(habitId, comment) {
 			const habit = this.habit(habitId)
-			console.log(habitId, habit);
-			habit.dailyComment.unshift({
+			habit.comments.unshift({
 				text: comment,
 				id: randomId(),
 				date: new Date(),
 			})
 		},
 		removeComment(habitId, commentId) {
-			const habit = this.habit(habitId)
+			const habit = this.habits.find((habit) => habit.id === habitId)
+			console.log(habit);
+			const comment = habit
+				.comments.find(
+					(comment) => comment.id === commentId
+				)
+			habit.comments.splice(comment, 1)
 		}
 	}
 })
