@@ -3,6 +3,8 @@ import { useLocalStorage } from '@vueuse/core'
 import { codeSlash } from 'ionicons/icons';
 
 
+// console.log(dayjs("2022-10-03T19:06:38.147Z").from());
+
 export const piniaStore = defineStore('main', {
 	state: () => ({
 		habits: useLocalStorage('vueUseMain', [
@@ -10,7 +12,16 @@ export const piniaStore = defineStore('main', {
 				id: String(Math.floor(Math.random() * (10 ** 10))),
 				date: new Date(),
 				title: 'Github Commit',
-				dailyComment: ['fun', 'forgor'],
+				dailyComment: [
+					{
+						text: 'You can Add Comments here Each day',
+						date: new Date(),
+					},
+					{
+						text: 'just like a diary, this way you can track your moods :)',
+						date: new Date(),
+					}
+				],
 				color: '#339',
 				icon: codeSlash,
 			},
@@ -28,6 +39,7 @@ export const piniaStore = defineStore('main', {
 				id: String(Math.floor(Math.random() * (10 ** 10))),
 				date: new Date(),
 				title: habit.title,
+				dailyComment: [],
 				color: habit.color,
 				icon: habit.icon,
 			});

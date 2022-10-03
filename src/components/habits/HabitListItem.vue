@@ -5,7 +5,7 @@
 .remover {
    font-size: 2em;
 }
-ion-thumbnail {
+ion-thumbnail { // centers the icon placement
    display: flex;
    justify-content: center;
    align-items: center;
@@ -20,6 +20,7 @@ IonItem
    
    IonLabel( :router-link="`/habits/${habit.id}`" )
       h1 {{ habit.title }}
+      h3 {{ dayjs(habit.date).from() }}
    
    IonButton( slot="end" @click="deleter(habit.id)" fill="clear" )
       IonIcon.remover( :icon="trashBinOutline" )
@@ -32,6 +33,10 @@ import { defineProps } from 'vue';
 import { trashBinOutline } from 'ionicons/icons';
 import { IonItem, IonThumbnail, IonLabel, IonIcon, IonButton } from '@ionic/vue';
 import { piniaStore } from '@/store';
+import dayjs from 'dayjs'
+import relativeTime from 'dayjs/plugin/relativeTime'
+
+dayjs.extend(relativeTime)
 
 const props = defineProps(["habit"])
 const store = piniaStore()

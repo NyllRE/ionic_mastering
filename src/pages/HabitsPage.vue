@@ -1,5 +1,5 @@
 <template lang="pug">
-BaseLayout( title="The Memories" )
+BaseLayout( title="Your Habits" )
 
    template( #actions )
       IonButton( router-link="/habits/add" )

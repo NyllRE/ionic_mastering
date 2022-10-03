@@ -24,7 +24,7 @@
 
 <template lang="pug">
 
-BaseLayout( title="add a memory" page-default-back-link="/memories" )
+BaseLayout( title="add a habit" page-default-back-link="/habits" )
    form.ion-padding( @submit.prevent="saveHabit" )
       IonList
          IonItem 
