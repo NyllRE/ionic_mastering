@@ -17,10 +17,6 @@ const routes = [
     path: '/habits/add',
     component: AddHabitPage,
   },
-  // {
-  //   path: '/habits/add/icon-picker',
-  //   component: () => import('@/pages/IconChooser.vue'),
-  // },
   {
     path: '/habits/:id',
     component: () => import('../pages/HabitDetail.vue')
