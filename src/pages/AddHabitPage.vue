@@ -20,6 +20,11 @@
    margin-left: .5em;
 }
 
+.icon {
+   color: var(--ion-color-light-contrast)
+   // color: white
+}
+
 </style>
 
 <template lang="pug">
@@ -33,7 +38,7 @@ BaseLayout( title="add a habit" page-default-back-link="/habits" )
 
          IonItem.center
             template( v-if="form.icon != ''" )
-               IonIcon( :icon="form.icon" style="color: black" )
+               IonIcon.icon( :icon="form.icon" )
                p.whitespace {{ iconName }}
             IonButton( fill="clear" type="button" @click="modal = !modal" v-else )
                IonIcon( :icon="happy" slot="start" )
@@ -44,7 +49,7 @@ BaseLayout( title="add a habit" page-default-back-link="/habits" )
             input.color-input( type="color" v-model="form.color" )
 
 
-         IonButton( expand="block" fill="outline" type="submit" ) submit
+         IonButton( expand="block" fill="clear" type="submit" ) submit
 
    IonModal( :is-open="modal" )
       IconChooser( @chosen="chosenIcon" )
@@ -69,7 +74,7 @@ const iconName = ref('')
 const form = reactive({
    title: '',
    icon: '',
-   color: ''
+   color: '#3d25a8'
 })
 
 const chosenIcon = async (icon) => {

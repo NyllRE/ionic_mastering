@@ -1,7 +1,7 @@
 <style lang="scss" scoped>
 
 .icon {
-   font-size: 5em;
+   font-size: 6em;
    margin: .5em 0;
 }
 
@@ -29,7 +29,7 @@ BaseLayout(
    .ion-text-center( v-if="habit" )
 
       .icon
-         IonIcon( :icon="habit.icon" )
+         IonIcon( :icon="habit.icon" :style="{color: habit.color}" )
          p.normal {{ dayjs(habit.date).from() }}
 
       form( @submit.prevent="postComment" )
@@ -45,7 +45,7 @@ BaseLayout(
             h3 {{ comment.text }}
             p {{ dayjs(comment.date).from() }}
          IonButton( slot="end" @click="removeComment(comment.id)" fill="clear" )
-            IonIcon.remover( :icon="trashBinOutline" )
+            IonIcon( :icon="trashBinOutline" slot="icon-only" )
 
    h1( v-else ) memory not found
 

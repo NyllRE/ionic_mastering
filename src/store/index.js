@@ -26,7 +26,7 @@ export const piniaStore = defineStore('main', {
 						id: randomId(),
 					}
 				],
-				color: '#339',
+				color: '#3d25a8',
 				icon: codeSlash,
 			},
 		])
