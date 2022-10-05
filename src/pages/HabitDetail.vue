@@ -17,6 +17,23 @@
 .text {
    white-space: initial;
 }
+
+.days {
+   display: flex;
+   width: 100%;
+   justify-content: space-evenly;
+}
+ion-item.day {
+    .input-wrapper{
+        flex: none;
+        margin-left: auto;
+      }
+      ion-checkbox.checkbox{
+         display: block;
+    }
+}input, label {
+   display: block;
+}
 </style>
 
 
@@ -32,20 +49,28 @@ BaseLayout(
          IonIcon( :icon="habit.icon" :style="{color: habit.color}" )
          p.normal {{ dayjs(habit.date).from() }}
 
-      form( @submit.prevent="postComment" )
-         IonItem
-            IonLabel.label( position="floating" ) add a comment
-            IonInput( v-model="comment" )
+      IonList.days
+         IonItem.day( v-for="_ in [0,0,0,0]" lines="full" )
+            IonCheckbox
+            IonLabel {{ dayjs(new Date()).format('DD/MM') }}
 
-      IonItem(
-         v-for="comment in habit.comments"
-         :key="comment.text"
-      )
-         IonLabel.text
-            h3 {{ comment.text }}
-            p {{ dayjs(comment.date).from() }}
-         IonButton( slot="end" @click="removeComment(comment.id)" fill="clear" )
-            IonIcon( :icon="trashBinOutline" slot="icon-only" )
+
+
+      IonList
+         form( @submit.prevent="postComment" ) 
+            IonItem
+               IonLabel.label( position="floating" ) add a comment
+               IonInput( v-model="comment" )
+         br
+         IonItem(
+            v-for="comment in habit.comments"
+            :key="comment.text"
+         )
+            IonLabel.text
+               h3 {{ comment.text }}
+               p {{ dayjs(comment.date).from() }}
+            IonButton( slot="end" @click="removeComment(comment.id)" fill="clear" )
+               IonIcon( :icon="trashBinOutline" slot="icon-only" )
 
    h1( v-else ) memory not found
 
@@ -54,7 +79,7 @@ BaseLayout(
 
 <script setup>
 import { ref, computed } from 'vue';
-import { IonIcon, IonItem, IonLabel, IonInput, IonButton } from '@ionic/vue'
+import { IonIcon, IonItem, IonLabel, IonInput, IonButton, IonList, IonCheckbox } from '@ionic/vue'
 import { trashBinOutline } from 'ionicons/icons';
 import { piniaStore } from '@/store'
 import dayjs from 'dayjs';
