@@ -54,12 +54,14 @@ BaseLayout(
          IonIcon(
             :icon="habit.icon"  @click="notify"
             :style="{color: habit.color}" )
-         p.normal {{ dayjs(habit.date).from() }}
+         p.normal.b {{ dayjs(habit.date).from() }}
 
       IonList.days
          IonItem( v-for="idx in [4,3,2,1,0]" lines="none" )
             .day
-               IonCheckbox
+               IonCheckbox(
+                  :checked="habit.progress.includes(dayjs(new Date()).subtract(idx, 'day').format('DD/MM/YY'))"
+               )
                IonLabel.b {{ dayjs(new Date()).subtract(idx, 'day').format('DD/MM') }}
 
 

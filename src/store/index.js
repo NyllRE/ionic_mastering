@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
 import { useLocalStorage } from '@vueuse/core'
 import { codeSlash } from 'ionicons/icons';
+import dayjs from 'dayjs';
 
 
 const randomId = () => {
@@ -26,6 +27,7 @@ export const piniaStore = defineStore('main', {
 						id: randomId(),
 					}
 				],
+				progress: [dayjs(new Date()).format('DD/MM/YY')],
 				color: '#3d25a8',
 				icon: codeSlash,
 			},
