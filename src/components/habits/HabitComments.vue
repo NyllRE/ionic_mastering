@@ -1,0 +1,50 @@
+<style>
+.text {
+   white-space: initial;
+}
+</style>
+
+<template lang="pug">
+IonList
+   IonItem
+      form( @submit.prevent="postComment" ) 
+         IonLabel.comment( position="floating" ) add a comment
+         IonInput( v-model="comment" )
+
+   IonItem(
+      v-for="comment in comments"
+      :key="comment.id"
+   )
+      IonLabel.text
+         h3 {{ comment.text }}
+         p {{ dayjs(comment.date).from() }}
+      IonButton( slot="end" @click="removeComment(comment.id)" fill="clear" )
+         IonIcon( :icon="trashBinOutline" slot="icon-only" )
+</template>
+
+<script setup>
+import { ref, defineProps } from 'vue'
+import { piniaStore } from '@/store'
+import { IonIcon,IonItem,IonLabel,IonInput,IonButton,IonList } from '@ionic/vue'
+import { trashBinOutline } from 'ionicons/icons';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+dayjs.extend(relativeTime)
+
+const store = piniaStore()
+const props = defineProps(['comments'])
+
+const comment = ref('')
+const postComment = () => {
+   console.log(comment.value);
+   if (comment.value != '') {
+      store.addComment(id.value, comment.value);
+      comment.value = ''
+   }
+}
+
+const removeComment = (commentId) => {
+   store.removeComment(id.value, commentId);
+}
+
+</script>

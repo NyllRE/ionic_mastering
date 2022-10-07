@@ -7,7 +7,7 @@ import dayjs from 'dayjs';
 const randomId = () => {
 	return String(Math.floor(Math.random() * (10 ** 10)))
 }
-
+useLocalStorage('storageVersion', '0.1.4')
 export const piniaStore = defineStore('main', {
 	state: () => ({
 		habits: useLocalStorage('vueUseMain', [
@@ -69,6 +69,17 @@ export const piniaStore = defineStore('main', {
 					(comment) => comment.id === commentId
 				)
 			habit.comments.splice(comment, 1)
-		}
+		},
+		changeProgress(id, date) {
+			const ourHabit = this.habits.find((habit) => habit.id == id)
+
+			if (ourHabit.progress.includes(date)) {
+				ourHabit.progress.splice(date, 1);
+			} else {
+				ourHabit.progress.push(date)
+			}
+			console.log(ourHabit.progress);
+
+		},
 	}
 })

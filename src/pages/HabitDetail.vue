@@ -11,9 +11,7 @@
    font-size: 16px;
    margin: 0;
 }
-.text {
-   white-space: initial;
-}
+
 
 .days {
    display: flex;
@@ -54,33 +52,20 @@ BaseLayout(
          IonIcon(
             :icon="habit.icon"  @click="notify"
             :style="{color: habit.color}" )
-         p.normal.b {{ dayjs(habit.date).from() }}
+         p.normal(style="font-weight: 500;") {{ dayjs(habit.date).from() }}
 
       IonList.days
          IonItem( v-for="idx in [4,3,2,1,0]" lines="none" )
             .day
                IonCheckbox(
-                  :checked="habit.progress.includes(dayjs(new Date()).subtract(idx, 'day').format('DD/MM/YY'))"
+                  :checked="habitIncludesToday(idx)"
+                  @ion-change="checkABox(idx)"
                )
-               IonLabel.b {{ dayjs(new Date()).subtract(idx, 'day').format('DD/MM') }}
+               IonLabel.b(:style="{'font-weight': idx == 0 ? 'bold' : '500'}") {{ dayjs(new Date()).subtract(idx, 'day').format('DD/MM') }}
 
 
 
-      IonList
-         form( @submit.prevent="postComment" ) 
-            IonItem
-               IonLabel.comment( position="floating" ) add a comment
-               IonInput( v-model="comment" )
-         br
-         IonItem(
-            v-for="comment in habit.comments"
-            :key="comment.text"
-         )
-            IonLabel.text
-               h3 {{ comment.text }}
-               p {{ dayjs(comment.date).from() }}
-            IonButton( slot="end" @click="removeComment(comment.id)" fill="clear" )
-               IonIcon( :icon="trashBinOutline" slot="icon-only" )
+      HabitComments( :comments="habit.comments" )
 
    h1( v-else ) memory not found
 
@@ -88,43 +73,32 @@ BaseLayout(
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
-import { IonIcon, IonItem, IonLabel, IonInput, IonButton, IonList, IonCheckbox } from '@ionic/vue'
-import { trashBinOutline } from 'ionicons/icons';
+import { ref } from 'vue';
 import { piniaStore } from '@/store'
+import HabitComments from '@/components/habits/HabitComments.vue'
+
+import { IonIcon, IonItem, IonLabel, IonList, IonCheckbox } from '@ionic/vue'
+
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import { localNotifications } from '@capacitor/local-notifications'
-
 dayjs.extend(relativeTime)
+
+
 
 const store = piniaStore()
 const id = ref(window.location.pathname.split('/')[2])
 
-const habit = computed(() => {
-   return store.habit(id.value)
-})
-
-const comment = ref('')
-const postComment = () => {
-   console.log(comment.value);
-   if (comment.value != '') {
-      store.addComment(id.value, comment.value);
-      comment.value = ''
-   } else {
-
-   }
+const habit = ref(store.habit(id.value))
+const habitIncludesToday = (idx) => {
+   return habit.value.progress.includes(dayjs(new Date()).subtract(idx, 'day').format('DD/MM/YY'))
 }
 
-const removeComment = (commentId) => {
-   store.removeComment(id.value, commentId);
-}
 
-const notify = () => {
-   localNotifications.schedule({
-      id: 1,
-      text: 'Single Local Notification',
-      data: { secret: 'secret' }
-    });
+//=>> Checkboxes
+
+
+const checkABox = (idx) => {
+   const date = dayjs(new Date()).subtract(idx, 'day').format('DD/MM/YY');
+   store.changeProgress(id.value, date)
 }
 </script>
