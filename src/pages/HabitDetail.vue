@@ -46,11 +46,11 @@ BaseLayout(
          p.normal {{ dayjs(habit.date).from() }}
 
       IonList.days
-         IonItem( v-for="_ in [0,0,0,0]" lines="none" )
+         IonItem( v-for="idx in [4,3,2,1,0]" lines="none" )
             .day
-               .checker
-                  IonCheckbox
-               IonLabel {{ dayjs(new Date()).format('DD/MM') }}
+               //- .checker
+               IonCheckbox
+               IonLabel {{ dayjs(new Date()).subtract(idx, 'day').format('DD/MM') }}
 
 
 
