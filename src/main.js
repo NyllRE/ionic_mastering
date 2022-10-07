@@ -23,7 +23,7 @@ import '@ionic/vue/css/display.css';
 
 /* Theme variables */
 import '@/theme/variables.scss';
-import '@/theme/core.css';
+import '@/theme/core.scss';
 import BaseLayout from '@/components/base/BaseLayout.vue';
 
 const pinia = createPinia()

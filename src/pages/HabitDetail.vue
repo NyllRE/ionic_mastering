@@ -11,7 +11,7 @@
 
 .normal {
    font-size: 16px;
-   margin: 0
+   margin: 0;
 }
 
 .text {
@@ -23,16 +23,10 @@
    width: 100%;
    justify-content: space-evenly;
 }
-ion-item.day {
-    .input-wrapper{
-        flex: none;
-        margin-left: auto;
-      }
-      ion-checkbox.checkbox{
-         display: block;
-    }
-}input, label {
-   display: block;
+.day {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
 }
 </style>
 
@@ -46,13 +40,17 @@ BaseLayout(
    .ion-text-center( v-if="habit" )
 
       .icon
-         IonIcon( :icon="habit.icon" :style="{color: habit.color}" )
+         IonIcon(
+            :icon="habit.icon"  @click="notify"
+            :style="{color: habit.color}" )
          p.normal {{ dayjs(habit.date).from() }}
 
       IonList.days
-         IonItem.day( v-for="_ in [0,0,0,0]" lines="full" )
-            IonCheckbox
-            IonLabel {{ dayjs(new Date()).format('DD/MM') }}
+         IonItem( v-for="_ in [0,0,0,0]" lines="none" )
+            .day
+               .checker
+                  IonCheckbox
+               IonLabel {{ dayjs(new Date()).format('DD/MM') }}
 
 
 
@@ -84,6 +82,7 @@ import { trashBinOutline } from 'ionicons/icons';
 import { piniaStore } from '@/store'
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import { localNotifications } from '@capacitor/local-notifications'
 
 dayjs.extend(relativeTime)
 
@@ -97,10 +96,23 @@ const habit = computed(() => {
 const comment = ref('')
 const postComment = () => {
    console.log(comment.value);
-   store.addComment(id.value, comment.value);
-   comment.value = ''
+   if (comment.value != '') {
+      store.addComment(id.value, comment.value);
+      comment.value = ''
+   } else {
+
+   }
 }
+
 const removeComment = (commentId) => {
    store.removeComment(id.value, commentId);
+}
+
+const notify = () => {
+   localNotifications.schedule({
+      id: 1,
+      text: 'Single Local Notification',
+      data: { secret: 'secret' }
+    });
 }
 </script>
