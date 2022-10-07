@@ -1,19 +1,16 @@
 <style lang="scss" scoped>
 
-.icon {
+.icon-holder {
    font-size: 6em;
    margin: .5em 0;
 }
-
-.label {
+.comment {
    color: grey;
 }
-
 .normal {
    font-size: 16px;
    margin: 0;
 }
-
 .text {
    white-space: initial;
 }
@@ -22,12 +19,26 @@
    display: flex;
    width: 100%;
    justify-content: space-evenly;
+   .day {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      ion-checkbox {
+         --size: 30px;
+         --background-checked: #6815ec;
+         
+         &::part(container) {
+            border-radius: 10px;
+            border: 2px solid #6815ec;
+         }
+      }
+      .b {
+         font-family: 'Quicksand', sans-serif;
+      }
+   }
 }
-.day {
-   display: flex;
-   flex-direction: column;
-   align-items: center;
-}
+
+
 </style>
 
 
@@ -39,7 +50,7 @@ BaseLayout(
 )
    .ion-text-center( v-if="habit" )
 
-      .icon
+      .icon-holder
          IonIcon(
             :icon="habit.icon"  @click="notify"
             :style="{color: habit.color}" )
@@ -48,16 +59,15 @@ BaseLayout(
       IonList.days
          IonItem( v-for="idx in [4,3,2,1,0]" lines="none" )
             .day
-               //- .checker
                IonCheckbox
-               IonLabel {{ dayjs(new Date()).subtract(idx, 'day').format('DD/MM') }}
+               IonLabel.b {{ dayjs(new Date()).subtract(idx, 'day').format('DD/MM') }}
 
 
 
       IonList
          form( @submit.prevent="postComment" ) 
             IonItem
-               IonLabel.label( position="floating" ) add a comment
+               IonLabel.comment( position="floating" ) add a comment
                IonInput( v-model="comment" )
          br
          IonItem(
