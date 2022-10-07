@@ -4,9 +4,7 @@
    font-size: 6em;
    margin: .5em 0;
 }
-.comment {
-   color: grey;
-}
+
 .normal {
    font-size: 16px;
    margin: 0;
@@ -23,11 +21,11 @@
       align-items: center;
       ion-checkbox {
          --size: 30px;
-         --background-checked: #6815ec;
+         --background-checked: var(--ion-color-primary-tint);
          
          &::part(container) {
             border-radius: 10px;
-            border: 2px solid #6815ec;
+            border: 2px solid var(--ion-color-primary-tint);
          }
       }
       .b {

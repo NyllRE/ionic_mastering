@@ -1,6 +1,9 @@
-<style>
-.text {
+<style scoped>
+.text-extend {
    white-space: initial;
+}
+.comment {
+   color: grey !important;
 }
 </style>
 
@@ -15,8 +18,8 @@ IonList
       v-for="comment in comments"
       :key="comment.id"
    )
-      IonLabel.text
-         h3 {{ comment.text }}
+      IonLabel
+         h3.text-extend {{ comment.text }}
          p {{ dayjs(comment.date).from() }}
       IonButton( slot="end" @click="removeComment(comment.id)" fill="clear" )
          IonIcon( :icon="trashBinOutline" slot="icon-only" )

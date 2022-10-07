@@ -64,10 +64,9 @@ export const piniaStore = defineStore('main', {
 		removeComment(habitId, commentId) {
 			const habit = this.habits.find((habit) => habit.id === habitId)
 			console.log(habit);
-			const comment = habit
-				.comments.find(
-					(comment) => comment.id === commentId
-				)
+			const comment = habit.comments.find(
+				(comment) => comment.id === commentId
+			)
 			habit.comments.splice(comment, 1)
 		},
 		changeProgress(id, date) {

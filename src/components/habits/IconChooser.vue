@@ -39,7 +39,6 @@ import { defineEmits } from 'vue';
 const emits = defineEmits(['chosen'])
 
 const choose = (name) => {
-   console.log(name.charAt(0).toUpperCase() + name.slice(1).match(/[A-Za-z][a-z]*/g).join(" "));
    emits(
       'chosen',
       [
