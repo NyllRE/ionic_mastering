@@ -5,6 +5,7 @@ BaseLayout( title="Your Habits" )
       IonButton( router-link="/habits/add" )
          IonIcon( slot="icon-only" :icon='addIcon' )
 
+
    HabitsList( :habits="store.habits" )
 
 </template>

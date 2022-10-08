@@ -46,6 +46,7 @@ export const piniaStore = defineStore('main', {
 				date: new Date(),
 				title: habit.title,
 				comments: [],
+				progress: [],
 				color: habit.color,
 				icon: habit.icon,
 			});
@@ -55,6 +56,7 @@ export const piniaStore = defineStore('main', {
 		},
 		addComment(habitId, comment) {
 			const habit = this.habit(habitId)
+			console.log(habit);
 			habit.comments.unshift({
 				text: comment,
 				id: randomId(),

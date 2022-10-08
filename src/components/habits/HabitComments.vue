@@ -8,7 +8,7 @@
 </style>
 
 <template lang="pug">
-IonList
+IonList   
    IonItem
       form( @submit.prevent="postComment" ) 
          IonLabel.comment( position="floating" ) add a comment
@@ -35,19 +35,19 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 dayjs.extend(relativeTime)
 
 const store = piniaStore()
-const props = defineProps(['comments'])
+const props = defineProps(['comments', 'habitId'])
 
 const comment = ref('')
 const postComment = () => {
    console.log(comment.value);
    if (comment.value != '') {
-      store.addComment(id.value, comment.value);
+      store.addComment(props.habitId, comment.value);
       comment.value = ''
    }
 }
 
 const removeComment = (commentId) => {
-   store.removeComment(id.value, commentId);
+   store.removeComment(props.habitId, commentId);
 }
 
 </script>

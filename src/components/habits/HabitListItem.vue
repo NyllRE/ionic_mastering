@@ -14,7 +14,9 @@ ion-thumbnail { // centers the icon placement
 
 <template lang="pug">
 
-IonItem
+HabitSlider
+
+IonItem( ref="habitRef" )
    IonThumbnail( slot="start" :router-link="`/habits/${habit.id}`" )
       IonIcon.icon( :icon="habit.icon" :style="{color: habit.color}" )
    
@@ -29,9 +31,10 @@ IonItem
 </template>
 
 <script setup>
-import { defineProps } from 'vue';
+import { defineProps, onMounted, ref } from 'vue';
 import { trashBinOutline } from 'ionicons/icons';
-import { IonItem, IonThumbnail, IonLabel, IonIcon, IonButton } from '@ionic/vue';
+import { IonItem, IonThumbnail, IonLabel, IonIcon, IonButton, createGesture } from '@ionic/vue';
+import HabitSlider from './HabitSlider.vue';
 import { piniaStore } from '@/store';
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
@@ -46,4 +49,26 @@ const deleter = (id) => {
    store.removeHabit(id);
 }
 
+
+
+const habitRef = ref()
+onMounted(() => {
+   console.log(habitRef.value);
+   const gesture = createGesture({
+      el: habitRef.value,
+      threshold: 0,
+      direction: 'x',
+      onMove: (e) => {
+         console.log(e);
+         if (e.deltaX < -340) return;
+         if (e.deltaX > 20) {
+            habitRef.value.style.transform = "";
+            habitRef.value.dataset.open = "false";
+            return
+         }
+         habitRef.value.style.transform = `translateX(${e.deltaX}px)`
+      }
+   })
+   gesture.enable()
+})
 </script>

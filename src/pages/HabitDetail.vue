@@ -63,7 +63,7 @@ BaseLayout(
 
 
 
-      HabitComments( :comments="habit.comments" )
+      HabitComments( :comments="habit.comments" :habitId="id" )
 
    h1( v-else ) memory not found
 

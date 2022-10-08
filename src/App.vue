@@ -16,3 +16,20 @@ export default defineComponent({
   }
 });
 </script>
+
+<script setup>
+import { useLocalStorage } from '@vueuse/core';
+import { onMounted } from 'vue'
+
+onMounted(() => {
+  const version = window.localStorage.getItem('storageVersion')
+  if (version == '0.1.4') {
+    // dont do anything
+  } else {
+    //=> do the data migration
+    window.localStorage.setItem('storageVersion', '0.1.4')
+  }
+  
+
+})
+</script>
