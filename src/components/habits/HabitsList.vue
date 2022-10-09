@@ -15,7 +15,7 @@ IonList
 <script setup>
 import { IonList, IonIcon } from '@ionic/vue'
 import { defineProps } from 'vue'
-import HabitListItem from './HabitListItem.vue';
+import HabitListItem from './HabitItemHolder.vue';
 
 const props = defineProps(["habits"])
 </script>
