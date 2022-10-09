@@ -10,23 +10,33 @@ ion-thumbnail { // centers the icon placement
    justify-content: center;
    align-items: center;
 }
+ion-item {
+   height: 4em
+
+}
+
+.rect {
+   width: 100%;
+   height: 6em;
+   background: #404;
+}
 </style>
 
 <template lang="pug">
 
 HabitSlider
 
-IonItem( ref="habitRef" )
-   IonThumbnail( slot="start" :router-link="`/habits/${habit.id}`" )
-      IonIcon.icon( :icon="habit.icon" :style="{color: habit.color}" )
-   
-   IonLabel( :router-link="`/habits/${habit.id}`" )
-      h1 {{ habit.title }}
-      h3 {{ dayjs(habit.date).from() }}
-   
-   IonButton( slot="end" @click="deleter(habit.id)" fill="clear" )
-      IonIcon.remover( :icon="trashBinOutline" )
+#habitRef( ref="habitRef" )
+   IonItem
+      IonThumbnail( slot="start" :router-link="`/habits/${habit.id}`" )
+         IonIcon.icon( :icon="habit.icon" :style="{color: habit.color}" )
       
+      IonLabel( :router-link="`/habits/${habit.id}`" )
+         h1 {{ habit.title }}
+         h3 {{ dayjs(habit.date).from() }}
+      
+      IonButton( slot="end" @click="deleter(habit.id)" fill="clear" )
+         IonIcon.remover( :icon="trashBinOutline" )
 
 </template>
 
@@ -44,31 +54,34 @@ dayjs.extend(relativeTime)
 const props = defineProps(["habit"])
 const store = piniaStore()
 
-const deleter = (id) => {
-   console.log(id);
-   store.removeHabit(id);
+const deleter = () => {
+   console.log(props.habit.id);
+   store.removeHabit(props.habit.id);
 }
 
 
-
-const habitRef = ref()
+let pRef = ref();
+const habitRef = ref();
 onMounted(() => {
-   console.log(habitRef.value);
    const gesture = createGesture({
-      el: habitRef.value,
-      threshold: 0,
-      direction: 'x',
-      onMove: (e) => {
-         console.log(e);
-         if (e.deltaX < -340) return;
-         if (e.deltaX > 20) {
-            habitRef.value.style.transform = "";
-            habitRef.value.dataset.open = "false";
-            return
-         }
-         habitRef.value.style.transform = `translateX(${e.deltaX}px)`
-      }
+     el: habitRef.value,
+     onMove: (detail) => { onMove(detail); }
    })
-   gesture.enable()
+   
+   gesture.enable();
+   
+   const onMove = (e) => {
+      if (e.deltaX < -340) return;
+      if (e.deltaX < -100) {
+         habitRef.value.style.transform = ""
+         return
+      }
+      if (e.deltaX > 100) {
+         habitRef.value.style.transform = "";
+         // deleter()
+         return
+      }
+      habitRef.value.style.transform = `translateX(${e.deltaX}px)`
+   }
 })
 </script>

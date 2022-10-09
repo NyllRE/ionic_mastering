@@ -15,17 +15,13 @@ import { trashBinOutline, archiveOutline } from 'ionicons/icons'
 
 <style lang="sass">
 .wrapper
-   background: red
+   background: linear-gradient(to right, red, #4f4)
    display: flex
-   // position: absolute
+   position: absolute
    flex-direction: row
    align-items: center
-   height: 3em
+   justify-content: space-between
+   height: 4em
    width: 100%
 
-   .column
-      display: flex
-      flex: 1
-      flex-basis: 100%
-      flex-direction: column
 </style>

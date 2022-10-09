@@ -1,3 +1,8 @@
+<style lang="sass">
+ion-list
+   padding: 0 !important
+</style>
+
 <template lang="pug">
 IonList
    HabitListItem(
