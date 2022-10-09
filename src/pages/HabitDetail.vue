@@ -10,6 +10,10 @@
    margin: 0;
 }
 
+ion-item {
+   height: 7em;
+}
+
 
 .days {
    display: flex;
@@ -24,7 +28,7 @@
          --background-checked: var(--ion-color-primary-tint);
          
          &::part(container) {
-            border-radius: 10px;
+            border-radius: 8px;
             border: 2px solid var(--ion-color-primary-tint);
          }
       }

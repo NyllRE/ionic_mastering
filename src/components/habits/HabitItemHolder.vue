@@ -39,16 +39,16 @@
 
 <script setup>
 	import { defineProps, onMounted, ref } from 'vue';
-	import { trashBinOutline, archiveOutline } from 'ionicons/icons'
 	import {
 		IonIcon,
 		createGesture,
       createAnimation,
       alertController
 	} from '@ionic/vue';
+	import HabitItem from './HabitItem.vue'
+	import { trashBinOutline, archiveOutline } from 'ionicons/icons'
 	import { Haptics, ImpactStyle } from '@capacitor/haptics'
 	import { piniaStore } from '@/store';
-	import HabitItem from './HabitItem.vue'
 	import dayjs from 'dayjs';
 	import relativeTime from 'dayjs/plugin/relativeTime';
 
@@ -76,11 +76,11 @@
          onStart: () => habitRef.value.style.transform = '',
 			onMove: (e) => onMove(e),
          onEnd: async (e) => onEnd(e),
-         });
-         gesture.enable(true);
+		});
+		gesture.enable(true);
          
 		const onMove = async (e) => {
-			if (e.deltaX < -340 || e.deltaX < -65 || e.deltaX > 65) return;
+			if (e.deltaX < -340 || e.deltaX < -60 || e.deltaX > 60) return;
 			habitRef.value.style.borderRadius = '50px';
 			habitRef.value.style.transform = `translateX(${e.deltaX}px)`;
          slideDistance.value = e.deltaX
@@ -173,7 +173,7 @@
 		createAnimation()
 			.addElement(yourIcon)
 			.duration(100)
-			.easing('ease-in')
+			.easing('ease-out')
 			.fromTo('transform', 'scale(1)', 'scale(1.5)')
 			.direction(reversing ? 'reverse' : 'normal')
 			.play();
