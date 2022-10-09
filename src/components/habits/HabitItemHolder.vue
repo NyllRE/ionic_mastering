@@ -46,6 +46,7 @@
       createAnimation,
       alertController
 	} from '@ionic/vue';
+	import { Haptics, ImpactStyle } from '@capacitor/haptics'
 	import { piniaStore } from '@/store';
 	import HabitItem from './HabitItem.vue'
 	import dayjs from 'dayjs';
@@ -80,6 +81,7 @@
          
 		const onMove = async (e) => {
 			if (e.deltaX < -340 || e.deltaX < -65 || e.deltaX > 65) return;
+			habitRef.value.style.borderRadius = '50px';
 			habitRef.value.style.transform = `translateX(${e.deltaX}px)`;
          slideDistance.value = e.deltaX
 
@@ -91,6 +93,7 @@
 
 			//=>> trash animation
 			if (e.deltaX > 0 && e.deltaX > 50 && !animating && !animated) {
+				await Haptics.impact({ style: ImpactStyle.Light })
 				await animateIcon(trash.value, false);
 				triggerAction = 'trash';
 			}
@@ -101,6 +104,7 @@
 
 			//=>> archive animation
 			if (e.deltaX < 0 && e.deltaX < -50 && !animating && !animated) {
+				await Haptics.impact({ style: ImpactStyle.Light })
             await animateIcon(archive.value, false);
 				triggerAction = 'archive';
 			}
@@ -115,7 +119,7 @@
 			if (triggerAction == 'trash') {
 
 				const alert = await alertController.create({
-					header: `Are you sure you want to delete ${props.habit.title}`,
+					header: `Are you sure you want to delete ${props.habit.title}?`,
 					buttons: [
 						{
 							text: 'No',
@@ -146,7 +150,7 @@
 				alert.present()
 
 			}
-			
+
          const returnAnimation = createAnimation()
             .addElement(habitRef.value)
             .duration(100)
