@@ -12,19 +12,29 @@ ion-thumbnail { // centers the icon placement
 }
 ion-item {
    height: 4em
-
 }
 
-.rect {
+.wrapper {
+   background: linear-gradient(to right, rgb(223, 23, 16), rgb(102, 179, 8));
+   display: flex;
+   position: absolute;
+   flex-direction: row;
+   align-items: center;
+   justify-content: space-between;
+   height: 4em;
    width: 100%;
-   height: 6em;
-   background: #404;
 }
 </style>
 
 <template lang="pug">
 
-HabitSlider
+.wrapper 
+   .column( ref="trash" )
+      IonIcon.ion-margin-start( color="light" :icon="trashBinOutline" )
+   .column.ion-text-right( ref="archive" )
+      IonIcon.ion-margin-end( color="light" :icon="archiveOutline" )
+
+
 
 #habitRef( ref="habitRef" )
    IonItem
@@ -35,15 +45,13 @@ HabitSlider
          h1 {{ habit.title }}
          h3 {{ dayjs(habit.date).from() }}
       
-      IonButton( slot="end" @click="deleter(habit.id)" fill="clear" )
-         IonIcon.remover( :icon="trashBinOutline" )
 
 </template>
 
 <script setup>
 import { defineProps, onMounted, ref } from 'vue';
-import { trashBinOutline } from 'ionicons/icons';
-import { IonItem, IonThumbnail, IonLabel, IonIcon, IonButton, createGesture } from '@ionic/vue';
+import { trashBinOutline, archiveOutline } from 'ionicons/icons';
+import { IonItem, IonThumbnail, IonLabel, IonIcon, IonButton, createGesture, createAnimation } from '@ionic/vue';
 import HabitSlider from './HabitSlider.vue';
 import { piniaStore } from '@/store';
 import dayjs from 'dayjs'
@@ -60,28 +68,57 @@ const deleter = () => {
 }
 
 
-let pRef = ref();
 const habitRef = ref();
+const trash = ref();
+const archive = ref();
+let animating = false
+let animated = false
 onMounted(() => {
    const gesture = createGesture({
-     el: habitRef.value,
-     onMove: (detail) => { onMove(detail); }
+      el: habitRef.value,
+      threshold: 20,
+     onStart: (e) => { habitRef.value.style.transform = ""},
+      onMove: (detail) => { onMove(detail); },
+     onEnd: (e) => { habitRef.value.style.transform = "" },
    })
-   
    gesture.enable();
-   
-   const onMove = (e) => {
-      if (e.deltaX < -340) return;
-      if (e.deltaX < -100) {
-         habitRef.value.style.transform = ""
-         return
-      }
-      if (e.deltaX > 100) {
-         habitRef.value.style.transform = "";
-         // deleter()
-         return
-      }
+
+
+
+   const onMove = async (e) => {
+      if (e.deltaX < -340 || e.deltaX < -65 || e.deltaX > 65) return
+
       habitRef.value.style.transform = `translateX(${e.deltaX}px)`
-   }
+
+      //=>> trash animation
+      if (e.deltaX >= 0 && e.deltaX > 50 && !animating && !animated) {
+         await animateIcon(trash.value, false)
+      }
+      if (e.deltaX >= 0 && e.deltaX < 50 && !animating && animated) {
+         await animateIcon(trash.value, true)
+      }
+
+      //=>> archive animation
+      if (e.deltaX <= 0 && e.deltaX < -50 && !animating && !animated) {
+         await animateIcon(archive.value, false)
+      }
+      if (e.deltaX <= 0 && e.deltaX > -50 && !animating && animated) {
+         await animateIcon(archive.value, true)
+      }
+  }
+
 })
+
+const animateIcon = async (yourIcon, reversing) => {
+   animating = true
+   createAnimation()
+      .addElement(yourIcon)
+      .duration(100)
+      .easing('ease-in')
+      .fromTo('transform', 'scale(1)', 'scale(1.5)')
+      .direction(reversing ? 'reverse' : 'normal')
+      .play()
+   animating = false
+   animated = reversing ? false : true
+}
 </script>
