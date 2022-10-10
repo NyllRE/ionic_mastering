@@ -8,7 +8,7 @@
           "content": "fix colors on dark mode",
           "id": 1664830471365,
           "level": "success",
-          "done": false
+          "done": true
         }
       }
     ],
@@ -17,6 +17,6 @@
     "add_mode": "bottom",
     "virtual": false,
     "showLine": false,
-    "playFontSize": 0
+    "playFontSize": 24
   }
 }

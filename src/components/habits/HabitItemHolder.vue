@@ -9,7 +9,7 @@
 		flex-direction: row;
 		align-items: center;
 		justify-content: space-between;
-		height: 4.5em;
+		height: 4em;
 		width: 100%;
 	}
 	.ios .wrapper {
@@ -89,13 +89,8 @@
          & check if it's already animated    */
 
 			//=>> icon animations
-			trash.value.style.transform =
-				`scale(${Math.min(60, Math.abs(e.deltaX)) / 40})`
-
-			archive.value.style.transform =
-				`scale(${Math.min(60, Math.abs(e.deltaX)) / 40})`
-
-
+			
+			
 			//=>> Trigger sides
 			if (e.deltaX > 0 && e.deltaX > 50 && !animated) {
 				await Haptics.impact({ style: ImpactStyle.Light })
@@ -106,7 +101,7 @@
 				triggerAction = undefined;
 				animated = false;
 			}
-
+			
 			if (e.deltaX < 0 && e.deltaX < -50 && !animated) {
 				await Haptics.impact({ style: ImpactStyle.Light })
 				triggerAction = 'archive';
@@ -118,14 +113,22 @@
 			}
 
 			//=>> if value is more than 60 or less than -60 don't move it
-			if (e.deltaX < -340 || e.deltaX < -60 || e.deltaX > 60) {
+			if (e.deltaX < -60 || e.deltaX > 60) {
 				habitRef.value.style.transform =
-				`translateX(${ e.deltaX < 0 ? '-60' : '60' }px)`
+					`translateX(${e.deltaX < 0 ? '-60' : '60'}px)`
+				trash.value.style.transform = archive.value.style.transform = 'scale(1.5)'
 				return;
 			};
 			
 			slideDistance.value = e.deltaX
-			habitRef.value.style.filter = `brightness(${1 - Math.abs(e.deltaX) / 500})`
+
+			trash.value.style.transform =
+				`scale(${Math.abs(e.deltaX) / 40})`
+
+			archive.value.style.transform =
+				`scale(${Math.abs(e.deltaX) / 40})`
+				
+			habitRef.value.style.filter = `brightness(${1 - Math.abs(e.deltaX) / 300})`
 			habitRef.value.style.transform = `translateX(${e.deltaX}px)`;
       };
       
