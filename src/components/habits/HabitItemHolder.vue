@@ -9,16 +9,20 @@
 		flex-direction: row;
 		align-items: center;
 		justify-content: space-between;
-		height: 4em;
+		height: 4.5em;
 		width: 100%;
+	}
+	.ios .wrapper {
+		height: 4.23em
 	}
 
 	#habit {
-		height: 4em;
+		height: 4.5em;
 	}
 </style>
 
 <template lang="pug">
+
 
 .wrapper 
    .column( ref="trash" )
@@ -27,13 +31,12 @@
       IonIcon.ion-margin-end( color="light" :icon="archiveOutline" )
 
 
-
 #habit( ref="habitRef" )
    HabitItem( :habit="habit" )
 
 
 //- for debugging purposes
-//- p {{ slideDistance }} 
+//- p {{ Math.round( slideDistance ) }} 
 
 </template>
 
