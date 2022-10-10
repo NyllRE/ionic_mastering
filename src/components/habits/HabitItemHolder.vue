@@ -88,35 +88,42 @@
          & check if it's already animating
          & check if it's already animated    */
 
-			//=>> trash animation
-			if (e.deltaX > 0 && e.deltaX > 50 && !animating && !animated) {
+			//=>> icon animations
+			trash.value.style.transform =
+				`scale(${Math.min(60, Math.abs(e.deltaX)) / 40})`
+
+			archive.value.style.transform =
+				`scale(${Math.min(60, Math.abs(e.deltaX)) / 40})`
+
+
+			//=>> Trigger sides
+			if (e.deltaX > 0 && e.deltaX > 50 && !animated) {
 				await Haptics.impact({ style: ImpactStyle.Light })
-				await animateIcon(trash.value, false);
 				triggerAction = 'trash';
+				animated = true;
 			}
-			if (e.deltaX >= 0 && e.deltaX < 50 && !animating && animated) {
-				await animateIcon(trash.value, true);
+			if (e.deltaX >= 0 && e.deltaX < 50 && animated) {
 				triggerAction = undefined;
+				animated = false;
 			}
 
-			//=>> archive animation
-			if (e.deltaX < 0 && e.deltaX < -50 && !animating && !animated) {
+			if (e.deltaX < 0 && e.deltaX < -50 && !animated) {
 				await Haptics.impact({ style: ImpactStyle.Light })
-            await animateIcon(archive.value, false);
 				triggerAction = 'archive';
+				animated = true
 			}
-			if (e.deltaX <= 0 && e.deltaX > -50 && !animating && animated) {
-				await animateIcon(archive.value, true);
+			if (e.deltaX <= 0 && e.deltaX > -50 && animated) {
 				triggerAction = undefined;
+				animated = false
 			}
 
 			//=>> if value is more than 60 or less than -60 don't move it
 			if (e.deltaX < -340 || e.deltaX < -60 || e.deltaX > 60) {
 				habitRef.value.style.transform =
-					`translateX(${ e.deltaX < 0 ? '-60' : '60' }px)`
+				`translateX(${ e.deltaX < 0 ? '-60' : '60' }px)`
 				return;
 			};
-
+			
 			slideDistance.value = e.deltaX
 			habitRef.value.style.filter = `brightness(${1 - Math.abs(e.deltaX) / 500})`
 			habitRef.value.style.transform = `translateX(${e.deltaX}px)`;
@@ -180,12 +187,12 @@
 	const animateIcon = async (yourIcon, reversing) => {
 		animating = true;
 		createAnimation()
-			.addElement(yourIcon)
-			.duration(100)
-			.easing('ease-out')
-			.fromTo('transform', 'scale(1)', 'scale(1.5)')
-			.direction(reversing ? 'reverse' : 'normal')
-			.play();
+		.addElement(yourIcon)
+		.duration(100)
+		.easing('ease-out')
+		.fromTo('transform', 'scale(1)', 'scale(1.5)')
+		.direction(reversing ? 'reverse' : 'normal')
+		.play();
 		animating = false;
 		animated = reversing ? false : true;
 	};
