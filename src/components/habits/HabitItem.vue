@@ -26,16 +26,19 @@ IonItem
 </template>
 
 <style lang="scss">
+	.icon {
+		font-size: 3em;
+	}
+	.remover {
+		font-size: 2em;
+	}
+	ion-thumbnail {
+		// centers the icon placement
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
 	ion-item {
-		height: 4.5em;
-		ion-thumbnail {
-			// centers the icon placement
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			.icon {
-				font-size: 2.5em;
-			}
-		}
+		height: 4em;
 	}
 </style>

@@ -19,20 +19,20 @@
 	#habit {
 		height: 4.5em;
 	}
+
 </style>
 
 <template lang="pug">
 
-
 .wrapper 
-   .column( ref="trash" )
-      IonIcon.ion-margin-start( color="light" :icon="trashBinOutline" )
-   .column.ion-text-right( ref="archive" )
-      IonIcon.ion-margin-end( color="light" :icon="archiveOutline" )
+	.column( ref="trash" )
+		IonIcon.ion-margin-start( color="light" :icon="trashBinOutline" )
+	.column.ion-text-right( ref="archive" )
+		IonIcon.ion-margin-end( color="light" :icon="archiveOutline" )
 
 
 #habit( ref="habitRef" )
-   HabitItem( :habit="habit" )
+	HabitItem( :habit="habit" )
 
 
 //- for debugging purposes
@@ -84,6 +84,7 @@
          
 		const onMove = async (e) => {
 			if (e.deltaX < -340 || e.deltaX < -60 || e.deltaX > 60) return;
+			habitRef.value.style.filter = `brightness(${1 - Math.abs(e.deltaX) / 500})`
 			habitRef.value.style.transform = `translateX(${e.deltaX}px)`;
          slideDistance.value = e.deltaX
 
@@ -164,7 +165,8 @@
          returnAnimation.destroy(true)
          gesture.enable(true)
          triggerAction = undefined
-         habitRef.value.style.transform = ''
+			habitRef.value.style.transform = ''
+			habitRef.value.style.filter = ''
          
       }
 
