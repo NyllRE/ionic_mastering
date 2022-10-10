@@ -27,8 +27,10 @@ ion-item {
          --size: 30px;
          --background-checked: var(--ion-color-primary-tint);
          
+         
          &::part(container) {
             border-radius: 8px;
+            padding: .15em;
             border: 2px solid var(--ion-color-primary-tint);
          }
       }
