@@ -84,7 +84,6 @@
          
 		const onMove = async (e) => {
 			if (e.deltaX < -340 || e.deltaX < -60 || e.deltaX > 60) return;
-			habitRef.value.style.borderRadius = '50px';
 			habitRef.value.style.transform = `translateX(${e.deltaX}px)`;
          slideDistance.value = e.deltaX
 

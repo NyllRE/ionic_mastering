@@ -59,7 +59,7 @@ BaseLayout(
          p.normal(style="font-weight: 500;") {{ dayjs(habit.date).from() }}
 
       IonList.days
-         IonItem( v-for="idx in [4,3,2,1,0]" lines="none" )
+         IonItem( v-for="idx in [4,3,2,1,0]" lines="none" mode="md" )
             .day
                IonCheckbox(
                   :checked="habitIncludesToday(idx)"

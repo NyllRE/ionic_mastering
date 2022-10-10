@@ -2,7 +2,7 @@
   
 ion-app
   ion-router-outlet
- 
+
 </template>
 <script>
 import { IonApp, IonRouterOutlet } from '@ionic/vue';
@@ -20,6 +20,7 @@ export default defineComponent({
 <script setup>
 import { useLocalStorage } from '@vueuse/core';
 import { onMounted } from 'vue'
+import Tabs from './pages/Tabs.vue';
 
 onMounted(() => {
   const version = window.localStorage.getItem('storageVersion')

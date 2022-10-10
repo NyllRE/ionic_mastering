@@ -63,7 +63,7 @@ import { reactive, ref } from 'vue'
 import { useRouter } from "vue-router"
 import { piniaStore } from '@/store'
 import { happy } from 'ionicons/icons'
-import IconChooser from '../components/habits/IconChooser.vue'
+import IconChooser from '../../components/habits/IconChooser.vue'
 
 
 const router = useRouter()
