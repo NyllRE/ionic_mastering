@@ -2,7 +2,8 @@
 
 <script setup>
 	import BaseLayout from '@/components/base/BaseLayout.vue';
-	import { ref, reactive, computed, onMounted } from 'vue';
+	import { IonButton, pickerController } from '@ionic/vue'
+	import { ref, reactive, computed } from 'vue';
 
 	const time = reactive({
 		limit: 20,
@@ -10,14 +11,13 @@
 		timerInterval: null,
 	});
 
-	const timeLimit = ref(10);
+	const timeLimit = ref(60*25);
 	const timePassed = ref(0);
 	const timeLeft = computed(() => timeLimit.value - timePassed.value);
 
 	const startTimer = () => {
 		time.timerInterval = setInterval(() => {
 			timePassed.value += 1;
-			console.log(timeLeft.value);
 			if (timeLeft.value <= 0) clearInterval(time.timerInterval);
 		}, 1000);
 	};
@@ -43,32 +43,63 @@
 		return `${(timeFraction.value * 3000).toFixed(0)} 283`;
 	});
 
-	onMounted(() => {
-		startTimer();
-	});
+	const timeGenerator = (time) => {
+		let listy = []
+		for (let i=5; i <= time; i+=5) {
+			listy.push({text: String(i), value: i})
+		}
+		return listy
+	};
+	const timePicker = async () => {
+        const picker = await pickerController.create({
+          columns: [
+            {
+              name: 'minutes',
+              options: timeGenerator(90)
+            },
+          ],
+          buttons: [
+            {
+              text: 'Cancel',
+              role: 'cancel',
+            },
+            {
+              text: 'Confirm',
+              handler: (value) => {
+					//   timeLimit.value = 60 * value.minutes.value
+					timeLimit.value = 10
+					 	startTimer()
+              },
+            },
+          ],
+        });
+        await picker.present();
+      }
 </script>
 
 <template lang="pug">
 
 BaseLayout( title="Timer Page" )
-   .timer
-      svg(
-         class="base-timer__svg"
-         viewBox="0 0 100 100"
-         xmlns="http://www.w3.org/2000/svg" )
-         g.base-timer__circle
-            circle.base-timer__path-elapsed(
-               cx="50"
-               cy="50"
-               r="46.5" )
-            path.base-timer__path-remaining(
-               :stroke-dasharray="circleDasharray"
-               d=" M 50, 50 m -45, 0 a 45,45 0 1,0 90,0 a 45,45 0 1,0 -90,0 "
-            )
+	.timer
+		svg(
+			class="base-timer__svg"
+			viewBox="0 0 100 100"
+			xmlns="http://www.w3.org/2000/svg" )
+			g.base-timer__circle
+				circle.base-timer__path-elapsed(
+					cx="50"
+					cy="50"
+					r="45" )
+				path.base-timer__path-remaining(
+					:stroke-dasharray="circleDasharray"
+					d=" M 50, 50 m -45, 0 a 45,45 0 1,0 90,0 a 45,45 0 1,0 -90,0 "
+				)
 
+		span.base-timer__label {{ formattedTimeLeft }}
+	
 
+	IonButton( @click="timePicker()" ) Choose Time	
 
-      span.base-timer__label {{ formattedTimeLeft }}
 
 </template>
 
@@ -87,7 +118,7 @@ BaseLayout( title="Timer Page" )
 
 		/* The SVG path that displays the timer's progress */
 		&__path-elapsed {
-			stroke-width: 0.4em;
+			stroke-width: 0.43em;
 			stroke:grey;
 		}
 
