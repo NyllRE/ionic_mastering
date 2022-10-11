@@ -61,7 +61,6 @@
 	const store = piniaStore();
 
 	const deleter = () => {
-		console.log(props.habit.id);
 		store.removeHabit(props.habit.id);
 	};
 

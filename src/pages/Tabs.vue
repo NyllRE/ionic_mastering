@@ -17,7 +17,7 @@ import { personCircle, time } from 'ionicons/icons';
 IonPage 
    Transition( name="fade" )
       IonTabs(
-         @ionTabsWillChange="beforeTabChange" @ionTabsDidChange="afterTabChange" )
+         @ionTabsWillChange="return" @ionTabsDidChange="return" )
          IonRouterOutlet
          IonTabBar( slot="bottom" )
             IonTabButton( tab="habits" href="/habits" )

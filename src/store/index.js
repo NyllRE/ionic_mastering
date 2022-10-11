@@ -56,7 +56,6 @@ export const piniaStore = defineStore('main', {
 		},
 		addComment(habitId, comment) {
 			const habit = this.habit(habitId)
-			console.log(habit);
 			habit.comments.unshift({
 				text: comment,
 				id: randomId(),
@@ -65,7 +64,6 @@ export const piniaStore = defineStore('main', {
 		},
 		removeComment(habitId, commentId) {
 			const habit = this.habits.find((habit) => habit.id === habitId)
-			console.log(habit);
 			const comment = habit.comments.find(
 				(comment) => comment.id === commentId
 			)
@@ -79,7 +77,6 @@ export const piniaStore = defineStore('main', {
 			} else {
 				ourHabit.progress.push(date)
 			}
-			console.log(ourHabit.progress);
 
 		},
 	}
