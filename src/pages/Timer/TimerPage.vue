@@ -2,7 +2,7 @@
 
 <script setup>
 	import BaseLayout from '@/components/base/BaseLayout.vue';
-	import { IonButton, pickerController } from '@ionic/vue'
+	import { IonButton, pickerController, IonContent } from '@ionic/vue'
 	import { ref, reactive, computed } from 'vue';
 
 	const time = reactive({
@@ -66,8 +66,8 @@
             {
               text: 'Confirm',
               handler: (value) => {
-					//   timeLimit.value = 60 * value.minutes.value
-					timeLimit.value = 10
+					  timeLimit.value = 60 * value.minutes.value
+					// timeLimit.value = 10
 					 	startTimer()
               },
             },
@@ -97,45 +97,54 @@ BaseLayout( title="Timer Page" )
 
 		span.base-timer__label {{ formattedTimeLeft }}
 	
-
-	IonButton( @click="timePicker()" ) Choose Time	
-
+	br
+	br
+	IonButton( @click="timePicker()" expand="full" shape="round" ) Choose Time
 
 </template>
 
 <style scoped lang="scss">
 	/* Sets the containers height and width */
+	.timer {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		// padding-top: 5px;
+
+	}
 	.base-timer {
 		position: relative;
 		width: 300px;
 		height: 300px;
 		/* Removes SVG styling that would hide the time label */
-
+		
 		&__circle {
 			fill: none;
 			stroke: none;
 		}
-
+		
 		/* The SVG path that displays the timer's progress */
 		&__path-elapsed {
 			stroke-width: 0.43em;
-			stroke:grey;
+			stroke:rgb(181, 181, 181);
 		}
-
+		
 		&__label {
 			position: absolute;
-
+			
 			/* Size should match the parent container */
-			width: 100%;
-			height: 370px;
+			width: 97%;
+			height: 381px;
 			/* Keep the label aligned to the top */
-			top: 0;
+			top: 6px;
 			/* Create a flexible box that centers content vertically and horizontally */
 			display: flex;
 			align-items: center;
 			justify-content: center;
 			/* Sort of an arbitrary number; adjust to your liking */
 			font-size: 48px;
+			box-shadow: 0 0 20px hsla(0, 0%, 0%, 0.571);
+			border-radius: 100em
 		}
 
 		&__path-remaining {
