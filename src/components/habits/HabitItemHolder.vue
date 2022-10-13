@@ -115,6 +115,7 @@
 			if (e.deltaX < -60 || e.deltaX > 60) {
 				habitRef.value.style.transform =
 					`translateX(${e.deltaX < 0 ? '-60' : '60'}px)`
+				console.log(e.deltaX);
 				trash.value.style.transform = archive.value.style.transform = 'scale(1.5)'
 				return;
 			};
@@ -134,7 +135,6 @@
       const onEnd = async (e) => {
 			gesture.enable(false)
 			if (triggerAction == 'trash') {
-
 				const alert = await alertController.create({
 					header: `Are you sure you want to delete ${props.habit.title}?`,
 					buttons: [
