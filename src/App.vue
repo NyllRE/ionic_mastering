@@ -6,6 +6,7 @@ ion-app
 </template>
 <script>
 import { PushNotifications } from '@capacitor/push-notifications';
+import { LocalNotifications } from '@capacitor/local-notifications'
 import { IonApp, IonRouterOutlet } from '@ionic/vue';
 import { defineComponent } from 'vue';
 
@@ -23,7 +24,7 @@ import { useLocalStorage } from '@vueuse/core';
 import { onMounted } from 'vue'
 import Tabs from './pages/Tabs.vue';
 
-onMounted(() => {
+onMounted(async () => {
   const version = window.localStorage.getItem('storageVersion')
   if (version == '0.1.4') {
     // dont do anything
@@ -31,48 +32,52 @@ onMounted(() => {
     //=> do the data migration
     window.localStorage.setItem('storageVersion', '0.1.4')
   }
-  
 
+  await LocalNotifications.schedule({
+    title: 'amorgus',
+    body: 'come play amogrus with your imagionary friends',
+  })
 })
 
 
 
-const addListeners = async () => {
-  await PushNotifications.addListener('registration', token => {
-    console.info('Registration token: ', token.value);
-  });
 
-  await PushNotifications.addListener('registrationError', err => {
-    console.error('Registration error: ', err.error);
-  });
+// const addListeners = async () => {
+//   await PushNotifications.addListener('registration', token => {
+//     console.info('Registration token: ', token.value);
+//   });
 
-  await PushNotifications.addListener('pushNotificationReceived', notification => {
-    console.log('Push notification received: ', notification);
-  });
+//   await PushNotifications.addListener('registrationError', err => {
+//     console.error('Registration error: ', err.error);
+//   });
 
-  await PushNotifications.addListener('pushNotificationActionPerformed', notification => {
-    console.log('Push notification action performed', notification.actionId, notification.inputValue);
-  });
-}
+//   await PushNotifications.addListener('pushNotificationReceived', notification => {
+//     console.log('Push notification received: ', notification);
+//   });
 
-const registerNotifications = async () => {
-  let permStatus = await PushNotifications.checkPermissions();
+//   await PushNotifications.addListener('pushNotificationActionPerformed', notification => {
+//     console.log('Push notification action performed', notification.actionId, notification.inputValue);
+//   });
+// }
 
-  if (permStatus.receive === 'prompt') {
-    permStatus = await PushNotifications.requestPermissions();
-  }
+// const registerNotifications = async () => {
+//   let permStatus = await PushNotifications.checkPermissions();
 
-  if (permStatus.receive !== 'granted') {
-    throw new Error('User denied permissions!');
-  }
+//   if (permStatus.receive === 'prompt') {
+//     permStatus = await PushNotifications.requestPermissions();
+//   }
 
-  await PushNotifications.register();
-}
+//   if (permStatus.receive !== 'granted') {
+//     throw new Error('User denied permissions!');
+//   }
 
-const getDeliveredNotifications = async () => {
-  const notificationList = await PushNotifications.getDeliveredNotifications();
-  alert('delivered notifications', ...notificationList)
-}
+//   await PushNotifications.register();
+// }
 
-getDeliveredNotifications()
+// const getDeliveredNotifications = async () => {
+//   const notificationList = await PushNotifications.getDeliveredNotifications();
+//   alert('delivered notifications', ...notificationList)
+// }
+
+// getDeliveredNotifications()
 </script>
