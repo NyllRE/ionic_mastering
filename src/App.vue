@@ -1,3 +1,5 @@
+<!-- @format -->
+
 <template lang="pug">
   
 ion-app
@@ -5,79 +7,90 @@ ion-app
 
 </template>
 <script>
-import { PushNotifications } from '@capacitor/push-notifications';
-import { LocalNotifications } from '@capacitor/local-notifications'
-import { IonApp, IonRouterOutlet } from '@ionic/vue';
-import { defineComponent } from 'vue';
+	import { PushNotifications } from '@capacitor/push-notifications';
+	import { LocalNotifications } from '@capacitor/local-notifications';
+	import { IonApp, IonRouterOutlet } from '@ionic/vue';
+	import { defineComponent } from 'vue';
 
-export default defineComponent({
-  name: 'App',
-  components: {
-    IonApp,
-    IonRouterOutlet
-  }
-});
+	export default defineComponent({
+		name: 'App',
+		components: {
+			IonApp,
+			IonRouterOutlet,
+		},
+	});
 </script>
 
 <script setup>
-import { useLocalStorage } from '@vueuse/core';
-import { onMounted } from 'vue'
-import Tabs from './pages/Tabs.vue';
+	import { useLocalStorage } from '@vueuse/core';
+	import { onMounted } from 'vue';
+	import Tabs from './pages/Tabs.vue';
 
-onMounted(async () => {
-  const version = window.localStorage.getItem('storageVersion')
-  if (version == '0.1.4') {
-    // dont do anything
-  } else {
-    //=> do the data migration
-    window.localStorage.setItem('storageVersion', '0.1.4')
-  }
+	function sleep(ms) {
+		return new Promise((resolve) => setTimeout(resolve, ms));
+	}
 
-  await LocalNotifications.schedule({
-    title: 'amorgus',
-    body: 'come play amogrus with your imagionary friends',
-  })
-})
+	onMounted(async () => {
+		const version = window.localStorage.getItem('storageVersion');
+		if (version == '0.1.4') {
+			// dont do anything
+		} else {
+			//=> do the data migration
+			window.localStorage.setItem('storageVersion', '0.1.4');
+		}
+		await sleep(5);
+		await LocalNotifications.requestPermissions();
 
+		await LocalNotifications.addListener(
+			'localNotificationActionPerformed',
+			(notification) => {
+				console.log('Notification action received', notification.actionId);
+			}
+		);
+		await LocalNotifications.registerActionTypes({
+			types: [
+				{
+					id: 'your_choice',
+					actions: [
+						{
+							id: 'dismiss',
+							title: 'Dismiss',
+							destructive: true,
+						},
+						{
+							id: 'open',
+							title: 'Open app',
+						},
+						{
+							id: 'respond',
+							title: 'Respond',
+							input: true,
+						},
+					],
+				},
+			],
+		});
 
+		// 4.
+		LocalNotifications.schedule({
+			notifications: [
+				{
+					id: 1,
+					title: 'Sample title',
+					body: 'Sample body',
+					actionTypeId: 'your_choice',
+				},
+			],
+		});
 
-
-// const addListeners = async () => {
-//   await PushNotifications.addListener('registration', token => {
-//     console.info('Registration token: ', token.value);
-//   });
-
-//   await PushNotifications.addListener('registrationError', err => {
-//     console.error('Registration error: ', err.error);
-//   });
-
-//   await PushNotifications.addListener('pushNotificationReceived', notification => {
-//     console.log('Push notification received: ', notification);
-//   });
-
-//   await PushNotifications.addListener('pushNotificationActionPerformed', notification => {
-//     console.log('Push notification action performed', notification.actionId, notification.inputValue);
-//   });
-// }
-
-// const registerNotifications = async () => {
-//   let permStatus = await PushNotifications.checkPermissions();
-
-//   if (permStatus.receive === 'prompt') {
-//     permStatus = await PushNotifications.requestPermissions();
-//   }
-
-//   if (permStatus.receive !== 'granted') {
-//     throw new Error('User denied permissions!');
-//   }
-
-//   await PushNotifications.register();
-// }
-
-// const getDeliveredNotifications = async () => {
-//   const notificationList = await PushNotifications.getDeliveredNotifications();
-//   alert('delivered notifications', ...notificationList)
-// }
-
-// getDeliveredNotifications()
+		// 5.
+		LocalNotifications.addListener(
+			'localNotificationActionPerformed',
+			(notification) => {
+				console.log(
+					`Notification ${notification.notification.title} was ${notification.actionId}ed.`
+				);
+			}
+		);
+	});
 </script>
