@@ -2,7 +2,7 @@ import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
   appId: 'com.nyll.br',
-  appName: 'Vue Nyll',
+  appName: 'Nyll Habit Formula',
   webDir: 'dist',
   bundledWebRuntime: false,
   plugins: {
@@ -12,7 +12,7 @@ const config: CapacitorConfig = {
     LocalNotifications: {
       smallIcon: "ic_stat_icon_config_sample",
       iconColor: "#488AFF",
-      sound: "beep.wav",
+      sound: "rickroll2.m4a",
     },
   }
 }

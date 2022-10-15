@@ -26,9 +26,7 @@ ion-app
 	import { onMounted } from 'vue';
 	import Tabs from './pages/Tabs.vue';
 
-	function sleep(ms) {
-		return new Promise((resolve) => setTimeout(resolve, ms));
-	}
+
 
 	onMounted(async () => {
 		const version = window.localStorage.getItem('storageVersion');
@@ -37,51 +35,17 @@ ion-app
 		} else {
 			//=> do the data migration
 			window.localStorage.setItem('storageVersion', '0.1.4');
-		}
-		await sleep(5);
+    }
+    
 		await LocalNotifications.requestPermissions();
 
 		await LocalNotifications.addListener(
 			'localNotificationActionPerformed',
 			(notification) => {
-				console.log('Notification action received', notification.actionId);
+				console.log('Notification action received: ', notification.actionId);
 			}
 		);
-		await LocalNotifications.registerActionTypes({
-			types: [
-				{
-					id: 'your_choice',
-					actions: [
-						{
-							id: 'dismiss',
-							title: 'Dismiss',
-							destructive: true,
-						},
-						{
-							id: 'open',
-							title: 'Open app',
-						},
-						{
-							id: 'respond',
-							title: 'Respond',
-							input: true,
-						},
-					],
-				},
-			],
-		});
 
-		// 4.
-		LocalNotifications.schedule({
-			notifications: [
-				{
-					id: 1,
-					title: 'Sample title',
-					body: 'Sample body',
-					actionTypeId: 'your_choice',
-				},
-			],
-		});
 
 		// 5.
 		LocalNotifications.addListener(
