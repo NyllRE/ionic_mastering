@@ -2,6 +2,7 @@
 
 <script setup>
 	import BaseLayout from '@/components/base/BaseLayout.vue';
+	import { LocalNotifications } from '@capacitor/local-notifications';
 	import { IonButton, pickerController, IonContent } from '@ionic/vue'
 	import { ref, reactive, computed } from 'vue';
 
@@ -11,11 +12,18 @@
 		timerInterval: null,
 	});
 
-	const timeLimit = ref(60*25);
+
+	const timeLimit = ref(60);
 	const timePassed = ref(0);
 	const timeLeft = computed(() => timeLimit.value - timePassed.value);
-
+	
 	const startTimer = async () => {
+		time.timerInterval = setInterval( async () => {
+			timePassed.value += 1;
+			if (timeLeft.value <= 0) {
+				clearInterval(time.timerInterval);
+			}
+		}, 1000)
 		await LocalNotifications.registerActionTypes({
 			types: [
 				{
@@ -45,21 +53,15 @@
 			notifications: [
 				{
 					id: 1,
-					title: `You chose ${props.habit.title}`,
+					title: 'Timer Finished!',
 					body:
-						`you want to ${triggerAction +' '+ props.habit.title}`,
+						`the ${timeLimit.value} minute timer has finished`,
 					actionTypeId: 'your_choice',
 					schedule: {at: new Date(Date.now() + 1000 * timeLimit.value) }
 				},
 			],
 		})
 
-		time.timerInterval = setInterval( async () => {
-			timePassed.value += 1;
-			if (timeLeft.value <= 0) {
-				clearInterval(time.timerInterval);
-			}
-		}, 1000)
 	};
 
 	const formattedTimeLeft = computed(() => {
@@ -90,6 +92,7 @@
 		}
 		return listy
 	};
+
 	const timePicker = async () => {
         const picker = await pickerController.create({
           columns: [
@@ -114,7 +117,7 @@
           ],
         });
         await picker.present();
-      }
+	}
 </script>
 
 <template lang="pug">
