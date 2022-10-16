@@ -37,7 +37,9 @@ ion-app
 			window.localStorage.setItem('storageVersion', '0.1.4');
     }
     
-		await LocalNotifications.requestPermissions();
+		await LocalNotifications.requestPermissions().then((e) => {
+			console.log(e);
+		}).catch((e) => console.log(e));
 
 		await LocalNotifications.addListener(
 			'localNotificationActionPerformed',
@@ -45,22 +47,8 @@ ion-app
 				console.log('Notification action received: ', notification.actionId);
 			}
 		);
-		LocalNotifications.schedule({
-			notifications: [
-				{
-					id: 1,
-					title: `You chose ${props.habit.title}`,
-					body:
-						`you want to ${triggerAction +' '+ props.habit.title}`,
-					actionTypeId: 'your_choice',
-					// schedule: LocalNotifications.
-				},
-			],
 
-		});
-
-		// 5.
-		LocalNotifications.addListener(
+		await LocalNotifications.addListener(
 			'localNotificationActionPerformed',
 			(notification) => {
 				console.log(
@@ -68,5 +56,6 @@ ion-app
 				);
 			}
 		);
+
 	});
 </script>

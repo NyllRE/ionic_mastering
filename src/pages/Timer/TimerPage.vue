@@ -10,6 +10,7 @@
 		limit: 20,
 		passed: 0,
 		timerInterval: null,
+		isOn: false
 	});
 
 
@@ -17,11 +18,14 @@
 	const timePassed = ref(0);
 	const timeLeft = computed(() => timeLimit.value - timePassed.value);
 	
-	const startTimer = async () => {
-		time.timerInterval = setInterval( async () => {
+const startTimer = async () => {
+		time.isOn = true
+		clearInterval(time.timerInterval);
+		time.timerInterval = setInterval( () => {
 			timePassed.value += 1;
 			if (timeLeft.value <= 0) {
 				clearInterval(time.timerInterval);
+				time.isOn = false
 			}
 		}, 1000)
 		await LocalNotifications.registerActionTypes({
@@ -133,16 +137,17 @@ BaseLayout( title="Timer Page" )
 					cx="50"
 					cy="50"
 					r="45" )
-				path.base-timer__path-remaining(
-					:stroke-dasharray="circleDasharray"
-					d=" M 50, 50 m -45, 0 a 45,45 0 1,0 90,0 a 45,45 0 1,0 -90,0 "
-				)
+				//- path.base-timer__path-remaining(
+				//- 	:stroke-dasharray="circleDasharray"
+				//- 	d=" M 50, 50 m -45, 0 a 45,45 0 1,0 90,0 a 45,45 0 1,0 -90,0 "
+				//- )
 
 		span.base-timer__label {{ formattedTimeLeft }}
 	
 	br
 	br
-	IonButton( @click="timePicker()" expand="full" shape="round" ) Choose Time
+	IonButton( @click="timePicker()" expand="full" shape="round" v-if="!time.isOn" ) Choose Time
+	IonButton( expand="full" shape="round" fill="clear" color="danger" v-else ) stop timer
 
 </template>
 

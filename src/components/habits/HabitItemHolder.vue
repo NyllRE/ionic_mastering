@@ -133,7 +133,22 @@
 		};
 
 		const onEnd = async (e) => {
+
 			gesture.enable(false);
+			const returnAnimation = createAnimation()
+				.addElement(habitRef.value)
+				.duration(100)
+				.fromTo(
+					'transform',
+					`translateX(${slideDistance.value}px)`,
+					'translateX(0px)'
+				);
+			await returnAnimation.play();
+			returnAnimation.destroy(true);
+			gesture.enable(true);
+			habitRef.value.style.transform = '';
+			habitRef.value.style.filter = '';
+
 			if (triggerAction == 'trash') {
 				const alert = await alertController.create({
 					header: `Are you sure you want to delete ${props.habit.title}?`,
@@ -186,7 +201,7 @@
 						},
 					],
 				});
-
+				
 				// 4.
 				LocalNotifications.schedule({
 					notifications: [
@@ -194,27 +209,14 @@
 							id: 1,
 							title: `You chose ${props.habit.title}`,
 							body:
-								`you want to ${triggerAction +' '+ props.habit.title}`,
+							`you want to ${triggerAction +' '+ props.habit.title}`,
 							actionTypeId: 'your_choice',
 						},
 					],
 				});
 			}
-
-			const returnAnimation = createAnimation()
-				.addElement(habitRef.value)
-				.duration(100)
-				.fromTo(
-					'transform',
-					`translateX(${slideDistance.value}px)`,
-					'translateX(0px)'
-				);
-			await returnAnimation.play();
-			returnAnimation.destroy(true);
-			gesture.enable(true);
 			triggerAction = undefined;
-			habitRef.value.style.transform = '';
-			habitRef.value.style.filter = '';
+			
 		};
 	});
 
