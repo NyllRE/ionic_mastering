@@ -15,11 +15,51 @@
 	const timePassed = ref(0);
 	const timeLeft = computed(() => timeLimit.value - timePassed.value);
 
-	const startTimer = () => {
-		time.timerInterval = setInterval(() => {
+	const startTimer = async () => {
+		await LocalNotifications.registerActionTypes({
+			types: [
+				{
+					id: 'your_choice',
+					actions: [
+						{
+							id: 'dismiss',
+							title: 'Dismiss',
+							destructive: true,
+						},
+						// {
+						// 	id: 'open',
+						// 	title: 'Open app',
+						// },
+						{
+							id: 'respond',
+							title: 'Respond',
+							input: true,
+						},
+					],
+				},
+			],
+		})
+
+		// 4. https://youtu.be/bww4a4B43tM
+		LocalNotifications.schedule({
+			notifications: [
+				{
+					id: 1,
+					title: `You chose ${props.habit.title}`,
+					body:
+						`you want to ${triggerAction +' '+ props.habit.title}`,
+					actionTypeId: 'your_choice',
+					schedule: {at: new Date(Date.now() + 1000 * timeLimit.value) }
+				},
+			],
+		})
+
+		time.timerInterval = setInterval( async () => {
 			timePassed.value += 1;
-			if (timeLeft.value <= 0) clearInterval(time.timerInterval);
-		}, 1000);
+			if (timeLeft.value <= 0) {
+				clearInterval(time.timerInterval);
+			}
+		}, 1000)
 	};
 
 	const formattedTimeLeft = computed(() => {
