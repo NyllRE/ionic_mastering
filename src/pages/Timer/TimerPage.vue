@@ -14,7 +14,7 @@
 	});
 
 
-	const timeLimit = ref(60);
+	const timeLimit = ref(60 * 5);
 	const timePassed = ref(0);
 	const timeLeft = computed(() => timeLimit.value - timePassed.value);
 	
@@ -59,7 +59,7 @@ const startTimer = async () => {
 					id: 1,
 					title: 'Timer Finished!',
 					body:
-						`the ${timeLimit.value} minute timer has finished`,
+						`the ${timeLimit.value / 60} minute timer has finished`,
 					actionTypeId: 'your_choice',
 					schedule: {at: new Date(Date.now() + 1000 * timeLimit.value) }
 				},
@@ -82,6 +82,7 @@ const startTimer = async () => {
 		return `${minutes}:${seconds}`;
 	});
 
+
 	const timeFraction = computed(() => {
 		return (1 / timeLimit.value) * (1 - timeLeft.value / timeLimit.value);
 	});
@@ -98,6 +99,7 @@ const startTimer = async () => {
 	};
 
 	const timePicker = async () => {
+		if (time.isOn) return;	
         const picker = await pickerController.create({
           columns: [
             {
@@ -115,7 +117,6 @@ const startTimer = async () => {
               handler: (value) => {
 					  timeLimit.value = 60 * value.minutes.value
 					// timeLimit.value = 10
-					 	startTimer()
               },
             },
           ],
@@ -137,16 +138,16 @@ BaseLayout( title="Timer Page" )
 					cx="50"
 					cy="50"
 					r="45" )
-				//- path.base-timer__path-remaining(
-				//- 	:stroke-dasharray="circleDasharray"
-				//- 	d=" M 50, 50 m -45, 0 a 45,45 0 1,0 90,0 a 45,45 0 1,0 -90,0 "
-				//- )
+				path.base-timer__path-remaining(
+					:stroke-dasharray="circleDasharray"
+					d=" M 50, 50 m -45, 0 a 45,45 0 1,0 90,0 a 45,45 0 1,0 -90,0 "
+				)
 
-		span.base-timer__label {{ formattedTimeLeft }}
+		span.base-timer__label( @click="timePicker" ) {{ formattedTimeLeft }}
 	
 	br
 	br
-	IonButton( @click="timePicker()" expand="full" shape="round" v-if="!time.isOn" ) Choose Time
+	IonButton( @click="startTimer" expand="full" shape="round" v-if="!time.isOn" ) Start Timer
 	IonButton( expand="full" shape="round" fill="clear" color="danger" v-else ) stop timer
 
 </template>
@@ -191,7 +192,6 @@ BaseLayout( title="Timer Page" )
 			justify-content: center;
 			/* Sort of an arbitrary number; adjust to your liking */
 			font-size: 48px;
-			box-shadow: 0 0 20px hsla(0, 0%, 0%, 0.571);
 			border-radius: 100em
 		}
 
